@@ -2,13 +2,62 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700&family=Kanit:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="src/style.css" />
     <title>todo-project</title>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app" class="app">
+      <div class="wrapper">
+        <h1 class="title">TODO LIST</h1>
+
+        <form class="todo-form" name="todo">
+          <label class="visually-hidden">Add new todo</label>
+          <input
+            class="input-form"
+            type="text"
+            name="todo"
+            placeholder="Add note..."
+          />
+
+          <button class="button-form" type="submit">
+            Add
+            <!-- <svg class="icon search-icon" width="16" height="18">
+              <use href="./public/symbol-defs.svg#icon-search"></use>
+            </svg> -->
+          </button>
+
+          <!-- <select name="select" class="select">
+            <option value="all" class="select-option">all</option>
+            <option value="complete" class="select-option">Complete</option>
+            <option value="incomplete" class="select-option">Incomplete</option>
+          </select> -->
+        </form>
+
+        <ul class="list"></ul>
+
+        <!-- <div class="home-img-container">
+          <img
+            src="./public/detective-check-1.jpg"
+            class="home-img"
+            width="221"
+            height="174"
+            alt="Detective checking notes illustration"
+          /> -->
+        <h3 class="home-img-title">Empty...</h3>
+        <!-- </div> -->
+        <!-- <div class="add-container">
+          <button class="add-button">Add</button>
+        </div> -->
+      </div>
+    </div>
+
     <script type="module" src="/src/main.js"></script>
-    <p>hello</p>
   </body>
 </html>
