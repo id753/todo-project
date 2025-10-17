@@ -3,7 +3,7 @@
     {
       "id": "374e",
       "title": "вы аваfg gggggggggg ggggваfgggggg gggggggggg gfh",
-      "completed": false,
+      "completed": true,
       "isFavorite": false
     },
     {
@@ -13,16 +13,10 @@
       "isFavorite": false
     },
     {
-      "id": "5dc0",
-      "title": "dds",
+      "id": "2cae",
+      "title": "k",
       "completed": false,
-      "isFavorite": true
-    },
-    {
-      "id": "a9a1",
-      "title": "f",
-      "completed": false,
-      "isFavorite": true
+      "isFavorite": false
     }
   ]
 }
