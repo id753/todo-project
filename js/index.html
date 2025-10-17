@@ -14,50 +14,81 @@
   </head>
   <body>
     <div id="app" class="app">
-      <div class="wrapper">
+      <header class="header">
         <h1 class="title">TODO LIST</h1>
-
-        <form class="todo-form" name="todo">
-          <label class="visually-hidden">Add new todo</label>
+        <div class="toggle-group">
+          <button class="theme-toggle" aria-label="Переключить тему"><svg class="icon" width="10" height="10">
+            <use href="../public/symbol-defs.svg#icon-moon"></use>
+          </svg></button>
+          <button
+            class="lang-toggle"
+            data-lang="en"
+            aria-label="Переключить мову"
+          >
+            УКР
+          </button>
+        </div>
+      </header>
+      <main class="wrapper">      
+        <!-- <div class="wrapper"> -->
+        <form class="todo-add-form" name="add_todo">
+          <label for="todo-input" class="visually-hidden">Add new todo</label>
           <input
             class="input-form"
             type="text"
             name="todo"
+            id="todo-input"
             placeholder="Add note..."
+            required
           />
+          <button class="button-form" type="submit">Add</button>
+        </form>
 
-          <button class="button-form" type="submit">
-            Add
-            <!-- <svg class="icon search-icon" width="16" height="18">
-              <use href="./public/symbol-defs.svg#icon-search"></use>
-            </svg> -->
-          </button>
-
-          <!-- <select name="select" class="select">
-            <option value="all" class="select-option">all</option>
-            <option value="complete" class="select-option">Complete</option>
-            <option value="incomplete" class="select-option">Incomplete</option>
-          </select> -->
+        <form class="todo-search-form" name="search_todo">
+          <label for="search-input" class="visually-hidden">Search note</label>
+          <input
+            class="input-search-form"
+            type="search"
+            name="search"
+            id="search-input"
+            placeholder="Search note..."
+          />
+          <label for="select-filter" class="visually-hidden"
+            >Filter tasks</label
+          >
+          <select name="select" class="select" id="select-filter">
+            <option value="all">All</option>
+            <option value="complete">Complete</option>
+            <option value="incomplete">Incomplete</option>
+            <option value="favorite">Favorite</option>
+          </select>
         </form>
 
         <ul class="list"></ul>
 
-        <!-- <div class="home-img-container">
-          <img
-            src="./public/detective-check-1.jpg"
-            class="home-img"
-            width="221"
-            height="174"
-            alt="Detective checking notes illustration"
-          /> -->
-        <h3 class="home-img-title">Empty...</h3>
+        <!-- <div class="home-img-container"> -->
+          <!-- <img
+              src="./public/1.jpg"
+              class="home-img"
+              width="221"
+              height="174"
+              alt=" notes illustration"
+            /> -->
         <!-- </div> -->
-        <!-- <div class="add-container">
-          <button class="add-button">Add</button>
-        </div> -->
-      </div>
+      <!-- </div> -->
     </div>
+    <div class="scroll">
+      <button class="scroll-to-top" aria-label="up">
+        <svg class="icon" width="25" height="25">
+            <use href="../public/symbol-defs.svg#icon-up"></use>
+          </svg>
+        </button>
+    </div>
+  </main>
 
+    <footer>
+      <p class="footer-text">Author 2025</p>
+    </footer>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>

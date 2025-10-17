@@ -1,29 +1,22 @@
 {
   "todos": [
     {
-      "id": 1,
-      "title": "Buy groceries",
-      "completed": false
+      "id": "374e",
+      "title": "вы аваfg gggggggggg ggggваfgggggg gggggggggg gfh",
+      "completed": true,
+      "isFavorite": false
     },
     {
-      "id": 2,
-      "title": "Finish homework",
-      "completed": true
+      "id": "cbe2",
+      "title": "f",
+      "completed": true,
+      "isFavorite": false
     },
     {
-      "id": 3,
-      "title": "Clean the room",
-      "completed": false
-    },
-    {
-      "id": "d7c4",
-      "title": "h",
-      "completed": false
-    },
-    {
-      "id": "3df3",
-      "title": "аап",
-      "completed": true
+      "id": "5dc0",
+      "title": "dds",
+      "completed": false,
+      "isFavorite": true
     }
   ]
 }

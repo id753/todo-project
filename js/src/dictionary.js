@@ -1,0 +1,28 @@
+export const dictionary = {
+  uk: {
+    title: 'СПИСОК СПРАВ',
+    addPlaceholder: 'Додати справу...',
+    searchPlaceholder: 'Знайти справу...',
+    addButton: 'Додати',
+    selectFilter: 'Фільтр справ',
+    optionAll: 'Усі',
+    optionComplete: 'Виконані',
+    optionIncomplete: 'Невиконані',
+    optionFavorite: 'Улюблені',
+    emptyMessage: 'Пусто...',
+    langToggle: 'EN',
+  },
+  en: {
+    title: 'TODO LIST',
+    addPlaceholder: 'Add note...',
+    searchPlaceholder: 'Search note...',
+    addButton: 'Add',
+    selectFilter: 'Filter tasks',
+    optionAll: 'All',
+    optionComplete: 'Complete',
+    optionIncomplete: 'Incomplete',
+    optionFavorite: 'Favorite',
+    emptyMessage: 'Empty...',
+    langToggle: 'УКР',
+  },
+};

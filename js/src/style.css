@@ -10,34 +10,107 @@
   border: 0;
 }
 
-:root {
-  --black: #252525;
-  --purple: #6c63ff;
-  --white: #f7f7f7;
-  --gray: #e0e0e0;
-
-  --font-family: 'Kanit', sans-serif;
-  --second-family: 'Inter', sans-serif;
+/* A Modern CSS Reset  */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+* {
+  margin: 0;
+}
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+input,
+button,
+textarea,
+select {
+  /* font: inherit; */
+}
+ul[class],
+ol[class] {
+  padding: 0;
+  list-style: none;
 }
 
+/* Светлая тема */
+:root {
+  --color-bg: #f7f7f7;
+  --color-surface: #ffffff;
+  --color-text: #333333;
+  --color-border: #e0e0e0;
+  --color-accent: #6c63ff;
+  --color-accent-hover: #5c54f4;
+  --color-placeholder: #999999;
+  --color-success: #28a745;
+  --color-error: #dc3545;
+
+  --color-utility: #ff7f00;
+  --color-utility-hover: #e07000;
+
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-gray: #cccccc;
+
+  --font-main: 'Kanit', sans-serif;
+  --font-alt: 'Inter', sans-serif;
+
+  --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  --transition: 0.25s ease;
+}
+
+/* Тёмная тема */
+.dark-theme {
+  --color-bg: #1c1c1c;
+  --color-surface: #2a2a2a;
+  --color-text: #f5f5f5;
+  --color-border: #3a3a3a;
+  --color-accent: #8a81ff;
+  --color-accent-hover: #a099ff;
+  --color-placeholder: #8e8e8e;
+  --color-success: #45a75e;
+  --color-error: #ff6f6f;
+
+  --color-utility: #ff983f;
+  --color-utility-hover: #ffad6e;
+
+  --shadow: 0 4px 15px rgba(255, 255, 255, 0.05);
+}
+
+/* Общие стили */
 * {
   box-sizing: border-box;
 }
 
 body {
-  font-family: var(--font-family);
-  color: var(--black);
+  font-family: var(--font-main);
+  color: var(--color-text);
   margin: 0;
-  background-color: var(--white);
+  background-color: var(--color-bg);
+  transition: background-color var(--transition), color var(--transition);
   min-width: 320px;
 }
 
 .app {
+  min-height: 100vh;
+  padding: 35px 20px;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  min-height: 100vh;
-  padding: 40px 20px;
+  flex-wrap: wrap;
+}
+.header {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 35px;
 }
 
 .wrapper {
@@ -46,71 +119,117 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  background: var(--color-surface);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
   padding: 30px 20px;
+  transition: background var(--transition), box-shadow var(--transition);
 }
 
 .title {
   font-weight: 700;
   font-size: 28px;
-  color: var(--black);
-  margin-bottom: 20px;
+  text-align: center;
+  margin-right: auto;
+  margin-left: auto;
+  color: var(--color-text);
 }
 
-.todo-form {
+/* Формы добавления и поиска */
+.todo-add-form,
+.todo-search-form {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 15px;
   width: 100%;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
 }
 
+/* Поля ввода */
 .input-form {
-  border: 2px solid var(--purple);
-  border-radius: 5px;
+  border: 2px solid var(--color-accent);
+  border-radius: 6px;
   padding: 8px 16px;
   width: 100%;
   flex: 1;
-  max-width: 525px;
+  max-width: 400px;
   height: 38px;
-  font-family: var(--second-family);
+  font-family: var(--font-alt);
   font-size: 16px;
   outline: none;
-  transition: 0.2s ease;
+  color: var(--color-text);
+  background: var(--color-surface);
+  transition: border var(--transition), box-shadow var(--transition);
 }
-
-.input-form:focus {
-  border-color: #5a52f2;
+.input-search-form {
+  border: 2px solid var(--color-accent);
+  border-radius: 6px;
+  padding: 8px 16px;
+  width: 100%;
+  flex: 1;
+  max-width: 400px;
+  height: 38px;
+  font-family: var(--font-alt);
+  font-size: 16px;
+  outline: none;
+  color: var(--color-text);
+  background: var(--color-surface);
+  transition: border var(--transition), box-shadow var(--transition);
+}
+.input-form:focus,
+.input-search-form:focus {
+  border-color: var(--color-accent-hover);
   box-shadow: 0 0 5px rgba(108, 99, 255, 0.3);
 }
 
-.input-form::placeholder {
-  color: #c3c1e5;
+.input-form::placeholder,
+.input-search-form::placeholder {
+  color: var(--color-placeholder);
 }
 
+/* Кнопка */
 .button-form {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 6px;
   border: none;
-  border-radius: 5px;
+  border-radius: 6px;
   padding: 8px 16px;
-  background: var(--purple);
-  color: var(--white);
+  width: 85px;
+  background: var(--color-accent);
+  color: var(--color-white);
   font-weight: 600;
   font-size: 15px;
   cursor: pointer;
-  transition: background 0.2s ease;
+  transition: background var(--transition), transform var(--transition);
 }
 
 .button-form:hover {
-  background: #5a52f2;
+  background: var(--color-accent-hover);
+  transform: translateY(-1px);
 }
 
+/* Селект фильтра */
+.select {
+  border: none;
+  border-radius: 6px;
+  width: 85px;
+  padding: 8px;
+  background: var(--color-accent);
+  color: var(--color-white);
+  font-weight: 500;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background var(--transition);
+}
+
+.select:hover {
+  background: var(--color-accent-hover);
+}
+
+/* Список */
 .list {
   list-style: none;
   padding: 0;
@@ -119,18 +238,148 @@ body {
   margin: 0 auto 20px;
 }
 
-.list li {
-  background: var(--white);
-  border: 1px solid var(--gray);
-  border-radius: 6px;
-  padding: 12px 16px;
+.list-item {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  min-height: 80px;
+  padding: 5px 10px;
   margin-bottom: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  transition: background 0.2s;
+  transition: background var(--transition), border var(--transition);
 }
 
-.list li:hover {
-  background: #f0f0ff;
+.list-item:hover {
+  background: rgba(108, 99, 255, 0.08);
+}
+
+.list-checkbox {
+  accent-color: var(--color-accent);
+  min-width: 1.5em;
+  height: 1.5em;
+}
+
+.list-title {
+  font-size: 16px;
+  line-height: 1.5;
+  padding: 5px 15px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.edit-input {
+  width: 100%;
+  margin: 15px;
+  font-size: 16px;
+  line-height: 1.5;
+  padding: 5px 15px;
+}
+
+/* Подпись Nет задач  */
+.empty-message {
+  font-weight: 400;
+  font-size: 18px;
+  color: var(--color-text);
+  margin-top: 15px;
+  text-align: center;
+  opacity: 0.8;
+}
+
+.toggle-group {
+  display: flex;
+  gap: 5px;
+}
+
+.theme-toggle,
+.lang-toggle {
+  border: none;
+  background: var(--color-utility);
+  color: var(--color-white);
+  width: 30px;
+  height: 30px;
+  padding: 2px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  transition: background var(--transition);
+}
+.scroll-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  border: none;
+  background: var(--color-utility);
+  color: var(--color-white);
+  width: 30px;
+  height: 30px;
+  padding: 2px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background var(--transition);
+}
+.scroll-to-top {
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+.scroll-to-top.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.theme-toggle:hover,
+.lang-toggle:hover,
+.scroll-to-top:hover {
+  background: var(--color-utility-hover);
+}
+
+.list-actions {
+  min-width: 100px;
+}
+
+.list-actions button {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  background-color: var(--color-accent);
+  border: none;
+  border-radius: 20%;
+}
+
+.list-actions button:hover {
+  background: var(--color-accent-hover);
+  transform: translateY(-1px);
+}
+
+.list-actions button svg,
+.list-actions button use,
+.scroll button svg,
+.scroll button use {
+  /* Это свойство гарантирует, что клики проходят сквозь элемент */
+  pointer-events: none;
+}
+
+.icon {
+  fill: #ffffff;
+  padding: 0;
+}
+
+footer {
+  margin-bottom: 10px;
+}
+
+.footer-text {
+  font-weight: 700;
+  font-size: 18px;
+  text-align: center;
+  padding: 0;
+  margin-right: auto;
+  margin-left: auto;
+  color: var(--color-text);
 }
