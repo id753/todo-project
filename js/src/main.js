@@ -31,12 +31,12 @@ updateTexts();
 
 const sunIcon = `
           <svg class="icon actions-icon" height="20">
-            <use href="../public/symbol-defs.svg#icon-sun"></use>
+            <use href="./public/symbol-defs.svg#icon-sun"></use>
           </svg>
         `;
 const moonIcon = `
           <svg class="icon actions-icon" height="15">
-            <use href="../public/symbol-defs.svg#icon-moon"></use>
+            <use href="./public/symbol-defs.svg#icon-moon"></use>
           </svg>
         `;
 if (savedTheme === 'dark') {
@@ -70,24 +70,24 @@ function createMarkup(arr) {
       const favoriteIcon = isFavorite
         ? `
               <svg class="icon actions-icon"  height="18">
-                <use href="../public/symbol-defs.svg#icon-heart-fill"></use>
+                <use href="./public/symbol-defs.svg#icon-heart-fill"></use>
               </svg>
             `
         : `
               <svg class="icon actions-icon"  height="18">
-                <use href="../public/symbol-defs.svg#icon-heart"></use>
+                <use href="./public/symbol-defs.svg#icon-heart"></use>
               </svg>
             `;
 
       const editIcon = `
           <svg class="icon actions-icon"  height="18">
-            <use href="../public/symbol-defs.svg#icon-pencil"></use>
+            <use href="./public/symbol-defs.svg#icon-pencil"></use>
           </svg>
         `;
 
       const deleteIcon = `
           <svg class="icon actions-icon"  height="18">
-            <use href="../public/symbol-defs.svg#icon-trash"></use>
+            <use href="./public/symbol-defs.svg#icon-trash"></use>
           </svg>
         `;
 
@@ -270,12 +270,12 @@ function handleToggleFavorite(e) {
       const favoriteIcon = data.isFavorite
         ? `
               <svg class="icon actions-icon" width="10" height="10">
-                <use href="../public/symbol-defs.svg#icon-heart-fill"></use>
+                <use href="./public/symbol-defs.svg#icon-heart-fill"></use>
               </svg>
             `
         : `
               <svg class="icon actions-icon" width="10" height="10">
-                <use href="../public/symbol-defs.svg#icon-heart"></use>
+                <use href="./public/symbol-defs.svg#icon-heart"></use>
               </svg>
             `;
       favoriteButton.dataset.favorite = data.isFavorite;
