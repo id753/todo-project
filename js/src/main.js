@@ -81,7 +81,7 @@ function createMarkup(arr) {
 
       const editIcon = `
           <svg class="icon actions-icon"  height="18">
-            <use href="symbol-defs.svg#icon-pencil"></use>
+            <use href="./public/symbol-defs.svg#icon-pencil"></use>
           </svg>
         `;
 
