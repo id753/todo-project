@@ -1,28 +1,22 @@
 {
   "todos": [
     {
-      "id": "2cae",
-      "title": "лее чистый вари",
-      "completed": false,
-      "isFavorite": false
-    },
-    {
-      "id": "ae05",
-      "title": "м",
+      "id": "97e5",
+      "title": "КУПИТИ",
       "completed": false,
       "isFavorite": true
     },
     {
-      "id": "d52a",
-      "title": "м",
-      "completed": true,
+      "id": "9d25",
+      "title": "ПРОДАТИ",
+      "completed": false,
       "isFavorite": false
     },
     {
-      "id": "a1dd",
-      "title": "в",
+      "id": "bc02",
+      "title": "шампунь",
       "completed": false,
-      "isFavorite": false
+      "isFavorite": true
     }
   ]
 }

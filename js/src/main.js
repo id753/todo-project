@@ -79,8 +79,6 @@ fetchData(BASE_URL)
   })
   .catch(error => console.log(error));
 
-updateTexts();
-
 // =====================
 // Разметка задач
 // =====================
@@ -298,6 +296,7 @@ function handleToggleFavorite(e) {
 function handleFilter() {
   const filterValue = select.value;
   const searchValue = searchInput.value.toLowerCase().trim();
+  const emptyMessageText = dictionary[currentLang].emptyMessage;
   let filteredTodos = [];
 
   switch (filterValue) {
@@ -322,7 +321,15 @@ function handleFilter() {
 
   container.innerHTML =
     filteredTodos.length === 0
-      ? '<h3 class="empty-message">Empty...</h3>'
+      ? ` <div class="image-container">
+        <img
+          src="./public/undraw_completed-tasks_1j9z-removebg-preview.png"
+          class="img img-empty"
+          width="120"
+          alt="Empty todo"
+        />
+        <h3 class="empty-message">${emptyMessageText}</h3>
+      </div>`
       : createMarkup(filteredTodos);
 }
 
@@ -381,3 +388,5 @@ window.addEventListener('scroll', () => {
 scrollBtn.addEventListener('click', () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
+
+updateTexts();
