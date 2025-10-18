@@ -17,9 +17,11 @@
       <header class="header">
         <h1 class="title">TODO LIST</h1>
         <div class="toggle-group">
-          <button class="theme-toggle" aria-label="Переключить тему"><svg class="icon" width="10" height="10">
-            <use href="./public/symbol-defs.svg#icon-moon"></use>
-          </svg></button>
+          <button class="theme-toggle" aria-label="Переключить тему">
+            <svg class="icon" width="10" height="10">
+              <use href="./public/symbol-defs.svg#icon-moon"></use>
+            </svg>
+          </button>
           <button
             class="lang-toggle"
             data-lang="en"
@@ -29,8 +31,8 @@
           </button>
         </div>
       </header>
-      <main class="wrapper">      
-        <!-- <div class="wrapper"> -->
+
+      <main class="wrapper">
         <form class="todo-add-form" name="add_todo">
           <label for="todo-input" class="visually-hidden">Add new todo</label>
           <input
@@ -66,29 +68,24 @@
 
         <ul class="list"></ul>
 
-        <!-- <div class="home-img-container"> -->
-          <!-- <img
-              src="./public/1.jpg"
-              class="home-img"
-              width="221"
-              height="174"
-              alt=" notes illustration"
-            /> -->
-        <!-- </div> -->
-      <!-- </div> -->
+        <div class="scroll">
+          <button class="scroll-to-top" aria-label="up">
+            <svg class="icon" width="25" height="25">
+              <use href="./public/symbol-defs.svg#icon-up"></use>
+            </svg>
+          </button>
+        </div>
+      </main>
     </div>
-    <div class="scroll">
-      <button class="scroll-to-top" aria-label="up">
-        <svg class="icon" width="25" height="25">
-            <use href="./public/symbol-defs.svg#icon-up"></use>
-          </svg>
-        </button>
-    </div>
-  </main>
 
     <footer>
-      <p class="footer-text">Author 2025</p>
+      <!-- <p class="footer-text">Author 2025</p> -->
+      <p class="footer-text">
+        &copy; 2025. Todo Project. Design and Development:
+        <a href="https://github.com/id753" target="_blank">ID753</a>
+      </p>
     </footer>
+
     <script type="module" src="./src/main.js"></script>
   </body>
 </html>

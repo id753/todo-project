@@ -1,21 +1,31 @@
+// =====================
+// Константы и данные
+// =====================
 const BASE_URL = 'http://localhost:3000/todos';
 import { dictionary } from './dictionary.js';
 
+const THEME_KEY = 'theme';
+const LANG_KEY = 'lang';
+
+let todos = [];
+let currentLang = localStorage.getItem(LANG_KEY) || 'uk';
+
+// =====================
+// DOM элементы
+// =====================
 const form = document.querySelector('.todo-add-form');
 const container = document.querySelector('.list');
 const select = document.querySelector('.select');
-let todos = [];
 const searchInput = document.querySelector('.input-search-form');
-
-searchInput.value = '';
-
 const themeToggle = document.querySelector('.theme-toggle');
 const langToggle = document.querySelector('.lang-toggle');
-const THEME_KEY = 'theme';
+const scrollBtn = document.querySelector('.scroll-to-top');
 
-const LANG_KEY = 'lang';
-let currentLang = localStorage.getItem(LANG_KEY) || 'uk';
+searchInput.value = ''; // очищаем поиск при загрузке
 
+// =====================
+// Слушатели событий
+// =====================
 form.addEventListener('submit', handleSubmit);
 select.addEventListener('change', handleFilter);
 container.addEventListener('click', handleUpdate);
@@ -26,19 +36,22 @@ searchInput.addEventListener('input', handleFilter);
 themeToggle.addEventListener('click', toggleTheme);
 langToggle.addEventListener('click', toggleLanguage);
 
+// =====================
+// Настройка темы
+// =====================
 const savedTheme = localStorage.getItem(THEME_KEY);
-updateTexts();
 
 const sunIcon = `
-          <svg class="icon actions-icon" height="20">
-            <use href="./public/symbol-defs.svg#icon-sun"></use>
-          </svg>
-        `;
+  <svg class="icon actions-icon" height="20">
+    <use href="./public/symbol-defs.svg#icon-sun"></use>
+  </svg>
+`;
 const moonIcon = `
-          <svg class="icon actions-icon" height="15">
-            <use href="./public/symbol-defs.svg#icon-moon"></use>
-          </svg>
-        `;
+  <svg class="icon actions-icon" height="15">
+    <use href="./public/symbol-defs.svg#icon-moon"></use>
+  </svg>
+`;
+
 if (savedTheme === 'dark') {
   document.body.classList.add('dark-theme');
   themeToggle.innerHTML = sunIcon;
@@ -46,79 +59,87 @@ if (savedTheme === 'dark') {
   themeToggle.innerHTML = moonIcon;
 }
 
+// =====================
+// Работа с сервером
+// =====================
 function fetchData(url = BASE_URL, options = {}) {
   return fetch(url, options).then(response => {
     if (!response.ok) {
       throw new Error(response.statusText);
     }
-    // console.log(response);
     return response.json();
   });
 }
+
+// Загружаем данные при старте
 fetchData(BASE_URL)
   .then(data => {
     todos = data;
-    // container.insertAdjacentHTML('afterbegin', createMarkup(data));
-    // container.insertAdjacentHTML('beforeend', createMarkup(data.reverse()));
-    handleFilter();
+    handleFilter(); // отрисовка списка
   })
   .catch(error => console.log(error));
 
+updateTexts();
+
+// =====================
+// Разметка задач
+// =====================
 function createMarkup(arr) {
   return arr
     .map(({ id, title, completed, isFavorite }) => {
       const favoriteIcon = isFavorite
         ? `
-              <svg class="icon actions-icon"  height="18">
-                <use href="./public/symbol-defs.svg#icon-heart-fill"></use>
-              </svg>
-            `
+          <svg class="icon actions-icon" height="18">
+            <use href="./public/symbol-defs.svg#icon-heart-fill"></use>
+          </svg>
+        `
         : `
-              <svg class="icon actions-icon"  height="18">
-                <use href="./public/symbol-defs.svg#icon-heart"></use>
-              </svg>
-            `;
+          <svg class="icon actions-icon" height="18">
+            <use href="./public/symbol-defs.svg#icon-heart"></use>
+          </svg>
+        `;
 
       const editIcon = `
-          <svg class="icon actions-icon"  height="18">
-            <use href="./public/symbol-defs.svg#icon-pencil"></use>
-          </svg>
-        `;
+        <svg class="icon actions-icon" height="18">
+          <use href="./public/symbol-defs.svg#icon-pencil"></use>
+        </svg>
+      `;
 
       const deleteIcon = `
-          <svg class="icon actions-icon"  height="18">
-            <use href="./public/symbol-defs.svg#icon-trash"></use>
-          </svg>
-        `;
+        <svg class="icon actions-icon" height="18">
+          <use href="./public/symbol-defs.svg#icon-trash"></use>
+        </svg>
+      `;
 
       return `
-          <li class="list-item" data-id="${id}">
-            <input type="checkbox" class="list-checkbox" ${
-              completed ? 'checked' : ''
-            }>
-            <h2 class="list-title">${title}</h2>
-            <div class="list-actions">
-              <button class="favorite-button" data-favorite="${isFavorite}">
-                ${favoriteIcon}
-              </button>
-              <button class="edit-button">
-                ${editIcon}
-              </button>
-              <button class="delete-button">
-                ${deleteIcon}
-              </button>
-            </div>
-          </li>
-        `;
+        <li class="list-item" data-id="${id}">
+          <input type="checkbox" class="list-checkbox" ${
+            completed ? 'checked' : ''
+          }>
+          <h2 class="list-title">${title}</h2>
+          <div class="list-actions">
+            <button class="favorite-button" data-favorite="${isFavorite}">
+              ${favoriteIcon}
+            </button>
+            <button class="edit-button">
+              ${editIcon}
+            </button>
+            <button class="delete-button">
+              ${deleteIcon}
+            </button>
+          </div>
+        </li>
+      `;
     })
     .join('');
 }
 
+// =====================
+// Добавление задачи
+// =====================
 function handleSubmit(e) {
   e.preventDefault();
-  // console.log(e.target.elements);
   const todo = e.target.elements.todo;
-
   if (!todo.value.trim()) return;
 
   fetchData(BASE_URL, {
@@ -131,19 +152,18 @@ function handleSubmit(e) {
     }),
   })
     .then(data => {
-      // console.log(response);
-      todos.push(data); //favorite
+      todos.push(data);
       handleFilter();
-      // container.insertAdjacentHTML('beforeend', createMarkup([data]));
     })
     .catch(error => console.log(error))
     .finally(() => e.target.reset());
 }
-// обновление статуса задачи
+
+// =====================
+// Обновление статуса
+// =====================
 function handleUpdate(e) {
-  if (!e.target.classList.contains('list-checkbox')) {
-    return;
-  }
+  if (!e.target.classList.contains('list-checkbox')) return;
 
   const parent = e.target.closest('.list-item');
   const id = parent.dataset.id;
@@ -154,47 +174,38 @@ function handleUpdate(e) {
     body: JSON.stringify({ completed: e.target.checked }),
   })
     .then(data => {
-      console.log('Успешно обновлено', data);
-
       e.target.checked = data.completed;
-
       const index = todos.findIndex(todo => todo.id === data.id);
-      if (index !== -1) {
-        todos[index].completed = data.completed;
-      }
-      //
+      if (index !== -1) todos[index].completed = data.completed;
       handleFilter();
     })
-    .catch(error => {
-      console.log(error);
-    });
+    .catch(console.log);
 }
 
-// удаление
+// =====================
+//  Удаление задачи
+// =====================
 function handleDelete(e) {
-  if (!e.target.classList.contains('delete-button')) {
-    return;
-  }
+  if (!e.target.classList.contains('delete-button')) return;
+
   const parent = e.target.closest('.list-item');
   const id = parent.dataset.id;
 
-  fetchData(`${BASE_URL}/${id}`, {
-    method: 'DELETE',
-  })
-    .then(data => {
+  fetchData(`${BASE_URL}/${id}`, { method: 'DELETE' })
+    .then(() => {
       parent.remove();
       todos = todos.filter(todo => todo.id !== id);
-      //
       handleFilter();
     })
-    .catch(error => console.log(error));
+    .catch(console.log);
 }
 
-// редактирование
+// =====================
+// Редактирование
+// =====================
 function handleEdit(e) {
-  if (!e.target.classList.contains('edit-button')) {
-    return;
-  }
+  if (!e.target.classList.contains('edit-button')) return;
+
   const parent = e.target.closest('.list-item');
   const id = parent.dataset.id;
   const titleEl = parent.querySelector('.list-title');
@@ -205,111 +216,99 @@ function handleEdit(e) {
   inputEl.className = 'edit-input';
   inputEl.value = currentTitle;
 
-  // Скрываем заголовок и вставляем поле ввода на его место
   titleEl.style.display = 'none';
   titleEl.insertAdjacentElement('afterend', inputEl);
   inputEl.focus();
 
-  // Функция для обработки сохранения (вынесена для чистоты)
+  // Сохранение изменений
   function saveEdit() {
     const newTitle = inputEl.value.trim();
-
     if (newTitle === currentTitle || !newTitle) {
       inputEl.remove();
-      titleEl.style.display = ''; // Показываем h2 обратно
+      titleEl.style.display = '';
       return;
     }
 
     fetchData(`${BASE_URL}/${id}`, {
       method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' }, // Важно для PATCH
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ title: newTitle }),
     })
       .then(data => {
-        console.log('Успешно обновлен заголовок', data);
-        titleEl.textContent = data.title; // Обновляем текст в h2
+        titleEl.textContent = data.title;
         const todoUpdate = todos.find(todo => todo.id === id);
-        if (todoUpdate) {
-          todoUpdate.title = data.title;
-        }
-        //
+        if (todoUpdate) todoUpdate.title = data.title;
         handleFilter();
       })
-      .catch(error => console.log('Ошибка при обновлении заголовка:', error))
+      .catch(console.log)
       .finally(() => {
         inputEl.remove();
-        titleEl.style.display = ''; //пустая строка '' сбрасывает инлайновый стиль
+        titleEl.style.display = '';
       });
   }
 
-  inputEl.addEventListener('keydown', e => {
-    if (e.key === 'Enter') saveEdit();
-  });
+  inputEl.addEventListener('keydown', e => e.key === 'Enter' && saveEdit());
   inputEl.addEventListener('blur', saveEdit);
 }
 
-// фейворит
+// =====================
+// Избранные задачи
+// =====================
 function handleToggleFavorite(e) {
-  if (!e.target.classList.contains('favorite-button')) {
-    return;
-  }
+  if (!e.target.classList.contains('favorite-button')) return;
+
   const favoriteButton = e.target;
   const parent = e.target.closest('.list-item');
   const id = parent.dataset.id;
 
-  const currentFavoriteStatus = favoriteButton.dataset.favorite === 'true';
-  const newFavoriteStatus = !currentFavoriteStatus;
+  const currentStatus = favoriteButton.dataset.favorite === 'true';
+  const newStatus = !currentStatus;
 
   fetchData(`${BASE_URL}/${id}`, {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ isFavorite: newFavoriteStatus }),
+    body: JSON.stringify({ isFavorite: newStatus }),
   })
     .then(data => {
-      console.log('Успешно обновлено избранное', data);
       const favoriteIcon = data.isFavorite
         ? `
-              <svg class="icon actions-icon" width="10" height="10">
-                <use href="./public/symbol-defs.svg#icon-heart-fill"></use>
-              </svg>
-            `
+          <svg class="icon actions-icon" width="10" height="10">
+            <use href="./public/symbol-defs.svg#icon-heart-fill"></use>
+          </svg>
+        `
         : `
-              <svg class="icon actions-icon" width="10" height="10">
-                <use href="./public/symbol-defs.svg#icon-heart"></use>
-              </svg>
-            `;
+          <svg class="icon actions-icon" width="10" height="10">
+            <use href="./public/symbol-defs.svg#icon-heart"></use>
+          </svg>
+        `;
+
       favoriteButton.dataset.favorite = data.isFavorite;
-      favoriteButton.textContent = favoriteIcon;
+      favoriteButton.innerHTML = favoriteIcon;
 
       const todoUpdate = todos.find(todo => todo.id === id);
-      if (todoUpdate) {
-        todoUpdate.isFavorite = data.isFavorite;
-      }
-      //
+      if (todoUpdate) todoUpdate.isFavorite = data.isFavorite;
       handleFilter();
     })
-    .catch(error => console.log(error));
+    .catch(console.log);
 }
 
+// =====================
+// Фильтр и поиск
+// =====================
 function handleFilter() {
-  // const filterValue = e.target.value;
   const filterValue = select.value;
   const searchValue = searchInput.value.toLowerCase().trim();
-
   let filteredTodos = [];
 
   switch (filterValue) {
-    case 'all':
-      filteredTodos = todos;
-      break;
     case 'complete':
-      filteredTodos = todos.filter(todo => todo.completed === true);
+      filteredTodos = todos.filter(todo => todo.completed);
       break;
     case 'incomplete':
-      filteredTodos = todos.filter(todo => todo.completed === false);
+      filteredTodos = todos.filter(todo => !todo.completed);
       break;
     case 'favorite':
-      filteredTodos = todos.filter(todo => todo.isFavorite === true);
+      filteredTodos = todos.filter(todo => todo.isFavorite);
       break;
     default:
       filteredTodos = todos;
@@ -321,28 +320,24 @@ function handleFilter() {
     );
   }
 
-  container.innerHTML = '';
-
-  if (filteredTodos.length === 0) {
-    container.innerHTML = '<h3 class="empty-message">Empty...</h3>';
-  } else {
-    container.insertAdjacentHTML('afterbegin', createMarkup(filteredTodos));
-  }
+  container.innerHTML =
+    filteredTodos.length === 0
+      ? '<h3 class="empty-message">Empty...</h3>'
+      : createMarkup(filteredTodos);
 }
 
+// =====================
+// Переключение темы
+// =====================
 function toggleTheme() {
   const isDark = document.body.classList.toggle('dark-theme');
-
-  if (isDark) {
-    localStorage.setItem(THEME_KEY, 'dark');
-    // themeToggle.textContent = '☀️';
-    themeToggle.innerHTML = sunIcon;
-  } else {
-    localStorage.setItem(THEME_KEY, 'light');
-    themeToggle.innerHTML = moonIcon;
-  }
+  localStorage.setItem(THEME_KEY, isDark ? 'dark' : 'light');
+  themeToggle.innerHTML = isDark ? sunIcon : moonIcon;
 }
 
+// =====================
+// Перевод (язык)
+// =====================
 function updateTexts() {
   const t = dictionary[currentLang];
 
@@ -352,8 +347,8 @@ function updateTexts() {
     t.searchPlaceholder;
   document.querySelector('.button-form').textContent = t.addButton;
   document.querySelector('.lang-toggle').textContent = t.langToggle;
+  document.querySelector('.footer-text').innerHTML = `${t.footerText}`;
 
-  // select для фильтров:
   const select = document.querySelector('.select');
   if (select) {
     select.options[0].textContent = t.optionAll;
@@ -363,19 +358,18 @@ function updateTexts() {
   }
 
   const emptyMsg = document.querySelector('.empty-message');
-  if (emptyMsg) {
-    emptyMsg.textContent = t.emptyMessage;
-  }
+  if (emptyMsg) emptyMsg.textContent = t.emptyMessage;
 }
+
 function toggleLanguage() {
   currentLang = currentLang === 'en' ? 'uk' : 'en';
   localStorage.setItem(LANG_KEY, currentLang);
   updateTexts();
 }
 
-// !scroll-to-top
-const scrollBtn = document.querySelector('.scroll-to-top');
-
+// =====================
+// Кнопка "Вверх"
+// =====================
 window.addEventListener('scroll', () => {
   if (window.scrollY > 200) {
     scrollBtn.classList.add('show');
@@ -385,8 +379,5 @@ window.addEventListener('scroll', () => {
 });
 
 scrollBtn.addEventListener('click', () => {
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth',
-  });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 });
