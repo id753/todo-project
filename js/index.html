@@ -10,6 +10,10 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="src/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://udacity.github.io/ud891/lesson3-semantics-built-in/02-chromevox-lite/chromevox_embed.css"
+    />
     <title>todo-project</title>
   </head>
   <body>
@@ -20,13 +24,13 @@
             src="./public/undraw_add-notes_9xls-removebg-preview2.png"
             class="img img-icon"
             width="50"
-            alt="Todo list icon"
+            alt="Todo List logo"
           />
           <h1 class="title">TODO LIST</h1>
         </a>
 
         <div class="toggle-group">
-          <button class="theme-toggle" aria-label="Переключить тему">
+          <button class="theme-toggle" aria-label="Switch theme">
             <svg class="icon" width="10" height="10">
               <use href="./public/symbol-defs.svg#icon-moon"></use>
             </svg>
@@ -34,14 +38,14 @@
           <button
             class="lang-toggle"
             data-lang="en"
-            aria-label="Переключить мову"
+            aria-label="Switch language"
           >
             УКР
           </button>
         </div>
       </header>
 
-      <main class="wrapper">
+      <main class="wrapper" tabindex="-1">
         <form class="todo-add-form" name="add_todo">
           <label for="todo-input" class="visually-hidden">Add new todo</label>
           <input
@@ -52,22 +56,28 @@
             placeholder="Add note..."
             required
           />
-          <button class="button-form" type="submit">Add</button>
+          <button class="button-form" type="submit">Add todo</button>
         </form>
 
         <form class="todo-search-form" name="search_todo">
-          <label for="search-input" class="visually-hidden">Search note</label>
+          <label for="search-input" class="visually-hidden">Search task</label>
           <input
             class="input-search-form"
             type="search"
             name="search"
             id="search-input"
-            placeholder="Search note..."
+            placeholder="Search task..."
           />
+
           <label for="select-filter" class="visually-hidden"
             >Filter tasks</label
           >
-          <select name="select" class="select" id="select-filter">
+          <select
+            name="select"
+            class="select"
+            id="select-filter"
+            aria-label="Filter tasks"
+          >
             <option value="all">All</option>
             <option value="complete">Complete</option>
             <option value="incomplete">Incomplete</option>
@@ -78,7 +88,11 @@
         <ul class="list"></ul>
 
         <div class="scroll">
-          <button class="scroll-to-top" aria-label="up">
+          <button
+            class="scroll-to-top"
+            aria-label="Go to the top of the site"
+            title="Go to the top"
+          >
             <svg class="icon" width="25" height="25">
               <use href="./public/symbol-defs.svg#icon-up"></use>
             </svg>
@@ -90,21 +104,57 @@
     <footer>
       <p class="footer-text">
         &copy; 2025. Todo Project. Design and Development:
-        <a href="https://github.com/id753" target="_blank">ID753</a>
+        <a
+          href="https://github.com/id753"
+          target="_blank"
+          rel="noopener noreferrer"
+          >ID753</a
+        >
       </p>
     </footer>
+    <div id="shade" class="shade" aria=hidden="true">
+  <span id="cvox-logo">
+    <img height="24" width="24" src="chromevox-no-background.svg" alt="ChromeVox Lite logo" class="enabled">
+    <img height="24" width="24" src="chromevox-no-background-off.svg" alt="ChromeVox Lite disabled logo" class="disabled">
+  </span>
+  <span id="caption"></span>
+  <button id="toggle-cvox"><span id="enable-cvox">Enable ChromeVox Lite</span><span id="disable-cvox">Disable ChromeVox Lite</button>
+</div>
+<div id="cvoxembed" class="cvoxembed" aria-hidden="true">
+  <div class="content">
+    <div class="controls">
+      <span>
+        Voice:
+        <select id="voices">
+        </select>
+      </span>
+      <span>
+        Speech rate:
+        <select id="rates">
+          <option value="1.0">Slow</option>
+          <option value="1.2" selected>Default</option>
+          <option value="1.8">Intermediate</option>
+          <option value="3.0">
+              Advanced (normal for a blind person)
+          </option>
+        </select>
+      </span>
+      <span>
+        Navigate:
+        <button id="previous">Previous</button>
+        <button id="next">Next</button>
+        <button id="click">Click</button>
+        <button id="heading">Heading</button>
+        <button id="top">Top</button>
+      </span>
+      <span class="volume">
+        Volume: <input id="volume" type="range" min=0 value=100 max=100>
+      </span>
+    </div>
+  </div>
+</div>
+    <script src="./src/1.js"></script>
 
     <script type="module" src="./src/main.js"></script>
   </body>
 </html>
-
-<!-- <div>
-  <img
-    src="./public/undraw_add-notes_9xls-removebg-preview.png"
-    class="top-item-img"
-    width="357"
-    height="301"
-    alt="Greys Vage discount 25%"
-  />
-  <h3 class="empty-message">Empty...</h3>
-</div> -->

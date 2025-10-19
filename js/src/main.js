@@ -9,6 +9,7 @@ const LANG_KEY = 'lang';
 
 let todos = [];
 let currentLang = localStorage.getItem(LANG_KEY) || 'uk';
+let t = dictionary[currentLang];
 
 // =====================
 // DOM элементы
@@ -16,6 +17,7 @@ let currentLang = localStorage.getItem(LANG_KEY) || 'uk';
 const form = document.querySelector('.todo-add-form');
 const container = document.querySelector('.list');
 const select = document.querySelector('.select');
+const searchForm = document.querySelector('.todo-search-form');
 const searchInput = document.querySelector('.input-search-form');
 const themeToggle = document.querySelector('.theme-toggle');
 const langToggle = document.querySelector('.lang-toggle');
@@ -55,8 +57,14 @@ const moonIcon = `
 if (savedTheme === 'dark') {
   document.body.classList.add('dark-theme');
   themeToggle.innerHTML = sunIcon;
+  // !
+  themeToggle.setAttribute('aria-label', t.themeLightLabel);
+  themeToggle.setAttribute('title', t.themeLightLabel);
 } else {
   themeToggle.innerHTML = moonIcon;
+  // !
+  themeToggle.setAttribute('aria-label', t.themeDarkLabel);
+  themeToggle.setAttribute('title', t.themeDarkLabel);
 }
 
 // =====================
@@ -83,6 +91,15 @@ fetchData(BASE_URL)
 // Разметка задач
 // =====================
 function createMarkup(arr) {
+  // !
+  t = dictionary[currentLang];
+  const deleteLabel = t.deleteLabel;
+  const favoriteAddLabel = t.favoriteAddLabel;
+  const favoriteRemoveLabel = t.favoriteRemoveLabel;
+  const editLabel = t.editLabel;
+  //
+  const markLabel = t.markLabel;
+  const unmarkLabel = t.unmarkLabel;
   return arr
     .map(({ id, title, completed, isFavorite }) => {
       const favoriteIcon = isFavorite
@@ -97,6 +114,10 @@ function createMarkup(arr) {
           </svg>
         `;
 
+      const favoriteLabel = isFavorite
+        ? `${favoriteRemoveLabel} ${title}`
+        : `${favoriteAddLabel} ${title}`;
+
       const editIcon = `
         <svg class="icon actions-icon" height="18">
           <use href="./public/symbol-defs.svg#icon-pencil"></use>
@@ -110,19 +131,28 @@ function createMarkup(arr) {
       `;
 
       return `
-        <li class="list-item" data-id="${id}">
-          <input type="checkbox" class="list-checkbox" ${
-            completed ? 'checked' : ''
-          }>
+        <li  class="list-item" data-id="${id}">
+        <input 
+        type="checkbox" 
+        class="list-checkbox" 
+        aria-label="${completed ? unmarkLabel : markLabel} ${title}" ${
+        completed ? 'checked' : ''
+      }
+                   >
           <h2 class="list-title">${title}</h2>
           <div class="list-actions">
-            <button class="favorite-button" data-favorite="${isFavorite}">
+            <button 
+                class="favorite-button" 
+                data-favorite="${isFavorite}" 
+                aria-label="${favoriteLabel}" 
+                title="${favoriteLabel}" 
+            >
               ${favoriteIcon}
             </button>
-            <button class="edit-button">
+            <button class="edit-button" aria-label="${editLabel} ${title}">
               ${editIcon}
             </button>
-            <button class="delete-button">
+            <button class="delete-button" aria-label="${deleteLabel} ${title}">
               ${deleteIcon}
             </button>
           </div>
@@ -162,6 +192,7 @@ function handleSubmit(e) {
 // =====================
 function handleUpdate(e) {
   if (!e.target.classList.contains('list-checkbox')) return;
+  e.preventDefault();
 
   const parent = e.target.closest('.list-item');
   const id = parent.dataset.id;
@@ -194,6 +225,9 @@ function handleDelete(e) {
       parent.remove();
       todos = todos.filter(todo => todo.id !== id);
       handleFilter();
+
+      // *
+      document.querySelector('.input-form').focus();
     })
     .catch(console.log);
 }
@@ -293,6 +327,10 @@ function handleToggleFavorite(e) {
 // =====================
 // Фильтр и поиск
 // =====================
+
+searchForm.addEventListener('submit', e => {
+  e.preventDefault();
+});
 function handleFilter() {
   const filterValue = select.value;
   const searchValue = searchInput.value.toLowerCase().trim();
@@ -326,7 +364,7 @@ function handleFilter() {
           src="./public/undraw_completed-tasks_1j9z-removebg-preview.png"
           class="img img-empty"
           width="120"
-          alt="Empty todo"
+          alt=""
         />
         <h3 class="empty-message">${emptyMessageText}</h3>
       </div>`
@@ -340,13 +378,25 @@ function toggleTheme() {
   const isDark = document.body.classList.toggle('dark-theme');
   localStorage.setItem(THEME_KEY, isDark ? 'dark' : 'light');
   themeToggle.innerHTML = isDark ? sunIcon : moonIcon;
+
+  // !💡 ЛОГИКА ARIA:
+  let nextAriaLabel;
+
+  if (isDark) {
+    nextAriaLabel = t.themeLightLabel;
+  } else {
+    nextAriaLabel = t.themeDarkLabel;
+  }
+
+  themeToggle.setAttribute('aria-label', nextAriaLabel);
+  themeToggle.setAttribute('title', nextAriaLabel);
 }
 
 // =====================
 // Перевод (язык)
 // =====================
 function updateTexts() {
-  const t = dictionary[currentLang];
+  t = dictionary[currentLang];
 
   document.querySelector('.title').textContent = t.title;
   document.querySelector('.input-form').placeholder = t.addPlaceholder;
@@ -366,6 +416,32 @@ function updateTexts() {
 
   const emptyMsg = document.querySelector('.empty-message');
   if (emptyMsg) emptyMsg.textContent = t.emptyMessage;
+
+  const isDark = document.body.classList.contains('dark-theme');
+  const themeAriaLabel = isDark ? t.themeLightLabel : t.themeDarkLabel;
+
+  themeToggle.setAttribute('aria-label', themeAriaLabel);
+  themeToggle.setAttribute('title', themeAriaLabel);
+
+  const nextLang = currentLang === 'en' ? 'uk' : 'en';
+
+  let langAriaLabel;
+
+  if (nextLang === 'uk') {
+    langAriaLabel = t.langUkrLabel;
+  } else {
+    langAriaLabel = t.langEngLabel;
+  }
+
+  langToggle.setAttribute('aria-label', langAriaLabel);
+  langToggle.setAttribute('title', langAriaLabel);
+
+  if (scrollBtn) {
+    scrollBtn.setAttribute('aria-label', t.toTopLabel);
+    scrollBtn.setAttribute('title', t.toTopLabel);
+  }
+
+  handleFilter();
 }
 
 function toggleLanguage() {

@@ -400,3 +400,140 @@ select:focus-visible {
   outline: 2px solid var(--color-accent);
   outline-offset: 3px;
 }
+body {
+  margin: 0;
+  padding: 0;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.cvoxembed {
+  height: 30px;
+  padding: 10px;
+  background: #ffe;
+  display: flex;
+  flex-direction: row;
+  font-family: arial, helvetica, sans-serif;
+  font-size: 11pt;
+}
+
+.content {
+}
+
+.controls {
+  float: left;
+  width: 100%;
+}
+
+.controls span {
+  padding-right: 30px;
+}
+
+#caption {
+  flex: 1;
+  padding: 2px 8px;
+  white-space: nowrap;
+  overflow: clip;
+  text-overflow: ellipsis;
+  width: 600px;
+  text-align: left;
+  color: white;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-size: 120%;
+}
+
+.volume {
+  height: 24px;
+  padding: 2px 8px;
+  white-space: nowrap;
+  overflow: clip;
+  text-overflow: ellipsis;
+}
+
+.volume input {
+  position: relative;
+  top: 3px;
+  left: 2px;
+}
+
+.cvoxembed select {
+  max-width: 150px;
+}
+
+button {
+  outline: 0;
+  border: 1px solid #666;
+  border-radius: 4px;
+}
+
+button#toggle-cvox {
+  border: 1px solid rgba(0, 0, 0, 0);
+  background-color: #2196f3;
+  padding: 2px;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-weight: 100;
+}
+
+span#cvox-logo {
+  border: 1px solid rgba(0, 0, 0, 0);
+  background-color: hsl(29, 92%, 60%);
+  padding: 2px;
+  border-radius: 3px;
+}
+
+body:not([enabled]) span#cvox-logo {
+  background-color: #9e9e9e;
+}
+
+body:not([enabled]) span#cvox-logo img.enabled {
+  display: none;
+}
+
+body[enabled] span#cvox-logo img.enabled {
+  display: initial;
+}
+
+body:not([enabled]) span#cvox-logo img.disabled {
+  display: initial;
+}
+
+body[enabled] span#cvox-logo img.disabled {
+  display: none;
+}
+
+button#toggle-cvox:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 1px 1px rgba(255, 255, 255, 0.5);
+}
+
+button#toggle-cvox span {
+  font-size: 18px;
+  color: white;
+  margin: 0px 5px;
+}
+
+body:not([enabled]) button#toggle-cvox span#disable-cvox {
+  display: none;
+}
+
+body[enabled] button#toggle-cvox span#enable-cvox {
+  display: none;
+}
+
+.cvoxembed button {
+  background: #fec;
+}
+
+.cvoxembed button:hover {
+  background: #fda;
+}
+
+.shade {
+  height: 30px;
+  padding: 10px;
+  background-color: rgba(64, 64, 64, 0.7);
+  display: flex;
+  align-items: center;
+}
