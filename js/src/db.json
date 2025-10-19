@@ -16,7 +16,7 @@
       "id": "f91f",
       "title": "Lorem ipsum dolor sit amet",
       "completed": false,
-      "isFavorite": false
+      "isFavorite": true
     },
     {
       "id": "56d1",

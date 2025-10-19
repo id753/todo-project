@@ -10,10 +10,6 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="src/style.css" />
-    <link
-      rel="stylesheet"
-      href="https://udacity.github.io/ud891/lesson3-semantics-built-in/02-chromevox-lite/chromevox_embed.css"
-    />
     <title>todo-project</title>
   </head>
   <body>
@@ -112,49 +108,14 @@
         >
       </p>
     </footer>
-    <div id="shade" class="shade" aria=hidden="true">
-  <span id="cvox-logo">
-    <img height="24" width="24" src="chromevox-no-background.svg" alt="ChromeVox Lite logo" class="enabled">
-    <img height="24" width="24" src="chromevox-no-background-off.svg" alt="ChromeVox Lite disabled logo" class="disabled">
-  </span>
-  <span id="caption"></span>
-  <button id="toggle-cvox"><span id="enable-cvox">Enable ChromeVox Lite</span><span id="disable-cvox">Disable ChromeVox Lite</button>
-</div>
-<div id="cvoxembed" class="cvoxembed" aria-hidden="true">
-  <div class="content">
-    <div class="controls">
-      <span>
-        Voice:
-        <select id="voices">
-        </select>
-      </span>
-      <span>
-        Speech rate:
-        <select id="rates">
-          <option value="1.0">Slow</option>
-          <option value="1.2" selected>Default</option>
-          <option value="1.8">Intermediate</option>
-          <option value="3.0">
-              Advanced (normal for a blind person)
-          </option>
-        </select>
-      </span>
-      <span>
-        Navigate:
-        <button id="previous">Previous</button>
-        <button id="next">Next</button>
-        <button id="click">Click</button>
-        <button id="heading">Heading</button>
-        <button id="top">Top</button>
-      </span>
-      <span class="volume">
-        Volume: <input id="volume" type="range" min=0 value=100 max=100>
-      </span>
-    </div>
-  </div>
-</div>
-    <script src="./src/1.js"></script>
-
+    <iframe
+      src="https://udacity.github.io/ud891/lesson3-semantics-built-in/02-chromevox-lite/chromevox_embed.html"
+      title="Встроенный пример ChromeVox Lite"
+      width="100%"
+      height="600"
+      frameborder="0"
+    >
+    </iframe>
     <script type="module" src="./src/main.js"></script>
   </body>
 </html>
