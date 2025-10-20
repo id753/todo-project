@@ -22,6 +22,7 @@ const searchInput = document.querySelector('.input-search-form');
 const themeToggle = document.querySelector('.theme-toggle');
 const langToggle = document.querySelector('.lang-toggle');
 const scrollBtn = document.querySelector('.scroll-to-top');
+const errorMsg = document.querySelector('.todo-error');
 
 searchInput.value = ''; // очищаем поиск при загрузке
 
@@ -79,11 +80,11 @@ function fetchData(url = BASE_URL, options = {}) {
   });
 }
 
-// Загружаем данные при старте
+// данные при старте
 fetchData(BASE_URL)
   .then(data => {
     todos = data;
-    handleFilter(); // отрисовка списка
+    handleFilter();
   })
   .catch(error => console.log(error));
 
@@ -139,9 +140,10 @@ function createMarkup(arr) {
         completed ? 'checked' : ''
       }
                    >
-          <h2 class="list-title">${title}</h2>
+          <p class="list-title">${title}</p>
           <div class="list-actions">
             <button 
+            type="button"
                 class="favorite-button" 
                 data-favorite="${isFavorite}" 
                 aria-label="${favoriteLabel}" 
@@ -149,10 +151,10 @@ function createMarkup(arr) {
             >
               ${favoriteIcon}
             </button>
-            <button class="edit-button" aria-label="${editLabel} ${title}">
+            <button type="button" class="edit-button" aria-label="${editLabel} ${title}">
               ${editIcon}
             </button>
-            <button class="delete-button" aria-label="${deleteLabel} ${title}">
+            <button type="button" class="delete-button" aria-label="${deleteLabel} ${title}">
               ${deleteIcon}
             </button>
           </div>
@@ -168,7 +170,11 @@ function createMarkup(arr) {
 function handleSubmit(e) {
   e.preventDefault();
   const todo = e.target.elements.todo;
-  if (!todo.value.trim()) return;
+  if (!todo.value.trim()) {
+    todo.style.border = '1px solid red';
+    return;
+  }
+  todo.style.border = '';
 
   fetchData(BASE_URL, {
     method: 'POST',
@@ -227,7 +233,9 @@ function handleDelete(e) {
       handleFilter();
 
       // *
-      document.querySelector('.input-form').focus();
+      if (todos.length > 0) {
+        document.querySelector('.input-form').focus();
+      }
     })
     .catch(console.log);
 }
@@ -241,7 +249,7 @@ function handleEdit(e) {
   const parent = e.target.closest('.list-item');
   const id = parent.dataset.id;
   const titleEl = parent.querySelector('.list-title');
-
+  const editButton = e.target.closest('.edit-button');
   const currentTitle = titleEl.textContent;
   const inputEl = document.createElement('input');
   inputEl.type = 'text';
@@ -258,6 +266,10 @@ function handleEdit(e) {
     if (newTitle === currentTitle || !newTitle) {
       inputEl.remove();
       titleEl.style.display = '';
+      //
+      if (editButton) {
+        editButton.focus();
+      }
       return;
     }
 
@@ -270,16 +282,29 @@ function handleEdit(e) {
         titleEl.textContent = data.title;
         const todoUpdate = todos.find(todo => todo.id === id);
         if (todoUpdate) todoUpdate.title = data.title;
+
         handleFilter();
       })
       .catch(console.log)
       .finally(() => {
         inputEl.remove();
         titleEl.style.display = '';
+        const newButton = document.querySelector(
+          `.list-item[data-id="${id}"] .edit-button`
+        );
+        if (newButton) {
+          newButton.focus();
+        }
       });
   }
 
-  inputEl.addEventListener('keydown', e => e.key === 'Enter' && saveEdit());
+  inputEl.addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      saveEdit();
+    }
+  });
+
   inputEl.addEventListener('blur', saveEdit);
 }
 
@@ -320,6 +345,13 @@ function handleToggleFavorite(e) {
       const todoUpdate = todos.find(todo => todo.id === id);
       if (todoUpdate) todoUpdate.isFavorite = data.isFavorite;
       handleFilter();
+      //
+      const newButton = document.querySelector(
+        `.list-item[data-id="${id}"] .favorite-button`
+      );
+      if (newButton) {
+        newButton.focus();
+      }
     })
     .catch(console.log);
 }
@@ -359,15 +391,17 @@ function handleFilter() {
 
   container.innerHTML =
     filteredTodos.length === 0
-      ? ` <div class="image-container">
-        <img
-          src="./public/undraw_completed-tasks_1j9z-removebg-preview.png"
-          class="img img-empty"
-          width="120"
-          alt=""
-        />
-        <h3 class="empty-message">${emptyMessageText}</h3>
-      </div>`
+      ? `<li class="list-item-empty" role="status">
+          <div class="image-container">
+            <img
+              src="./public/undraw_completed-tasks_1j9z-removebg-preview.png"
+              class="img img-empty"
+              width="120"
+              alt=""
+            />
+            <h2 class="empty-message">${emptyMessageText}</h2>
+          </div>
+        </li>`
       : createMarkup(filteredTodos);
 }
 
@@ -379,7 +413,7 @@ function toggleTheme() {
   localStorage.setItem(THEME_KEY, isDark ? 'dark' : 'light');
   themeToggle.innerHTML = isDark ? sunIcon : moonIcon;
 
-  // !💡 ЛОГИКА ARIA:
+  // ! ARIA:
   let nextAriaLabel;
 
   if (isDark) {
@@ -397,6 +431,8 @@ function toggleTheme() {
 // =====================
 function updateTexts() {
   t = dictionary[currentLang];
+
+  document.documentElement.setAttribute('lang', currentLang);
 
   document.querySelector('.title').textContent = t.title;
   document.querySelector('.input-form').placeholder = t.addPlaceholder;
@@ -463,6 +499,7 @@ window.addEventListener('scroll', () => {
 
 scrollBtn.addEventListener('click', () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
+  document.querySelector('.input-form').focus();
 });
 
 updateTexts();

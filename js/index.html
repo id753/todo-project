@@ -10,9 +10,11 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="src/style.css" />
-    <title>todo-project</title>
+    <title>todo project a11y</title>
   </head>
   <body>
+    <a href="#main" class="skip-link">Skip to main content</a>
+
     <div id="app" class="app">
       <header class="header">
         <a class="title-container" href="./index.html">
@@ -26,12 +28,13 @@
         </a>
 
         <div class="toggle-group">
-          <button class="theme-toggle" aria-label="Switch theme">
+          <button type="button" class="theme-toggle" aria-label="Switch theme">
             <svg class="icon" width="10" height="10">
               <use href="./public/symbol-defs.svg#icon-moon"></use>
             </svg>
           </button>
           <button
+            type="button"
             class="lang-toggle"
             data-lang="en"
             aria-label="Switch language"
@@ -41,7 +44,7 @@
         </div>
       </header>
 
-      <main class="wrapper" tabindex="-1">
+      <main class="wrapper" id="main" tabindex="-1">
         <form class="todo-add-form" name="add_todo">
           <label for="todo-input" class="visually-hidden">Add new todo</label>
           <input
@@ -49,30 +52,31 @@
             type="text"
             name="todo"
             id="todo-input"
-            placeholder="Add note..."
+            placeholder="Add todo..."
             required
           />
+          <!-- <p class="todo-error" aria-live="assertive"></p> -->
           <button class="button-form" type="submit">Add todo</button>
         </form>
 
         <form class="todo-search-form" name="search_todo">
-          <label for="search-input" class="visually-hidden">Search task</label>
+          <label for="search-input" class="visually-hidden">Search todo</label>
           <input
             class="input-search-form"
             type="search"
             name="search"
             id="search-input"
-            placeholder="Search task..."
+            placeholder="Search todo..."
           />
 
           <label for="select-filter" class="visually-hidden"
-            >Filter tasks</label
+            >Filter todos</label
           >
           <select
             name="select"
             class="select"
             id="select-filter"
-            aria-label="Filter tasks"
+            aria-label="Filter todos"
           >
             <option value="all">All</option>
             <option value="complete">Complete</option>
@@ -81,10 +85,11 @@
           </select>
         </form>
 
-        <ul class="list"></ul>
+        <ul class="list" aria-live="polite"></ul>
 
         <div class="scroll">
           <button
+            type="button"
             class="scroll-to-top"
             aria-label="Go to the top of the site"
             title="Go to the top"
@@ -108,14 +113,7 @@
         >
       </p>
     </footer>
-    <iframe
-      src="https://udacity.github.io/ud891/lesson3-semantics-built-in/02-chromevox-lite/chromevox_embed.html"
-      title="Встроенный пример ChromeVox Lite"
-      width="100%"
-      height="600"
-      frameborder="0"
-    >
-    </iframe>
+
     <script type="module" src="./src/main.js"></script>
   </body>
 </html>
