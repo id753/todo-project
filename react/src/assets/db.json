@@ -1,0 +1,22 @@
+{
+  "todos": [
+    {
+      "id": 1,
+      "title": "Learn JavaScript",
+      "completed": false,
+      "isFavorite": true
+    },
+    {
+      "id": 2,
+      "title": "Practice React",
+      "completed": false,
+      "isFavorite": false
+    },
+    {
+      "id": 3,
+      "title": "Build Todo App",
+      "completed": true,
+      "isFavorite": true
+    }
+  ]
+}

@@ -1,0 +1,127 @@
+.wrapper {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--color-surface);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  padding: 30px 20px;
+  transition: background var(--transition), box-shadow var(--transition);
+}
+
+.todoForm {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  width: 100%;
+  margin-bottom: 25px;
+}
+
+.input_form {
+  border: 2px solid var(--color-accent);
+  border-radius: 6px;
+  padding: 8px 16px;
+  width: 100%;
+  flex: 1;
+  max-width: 400px;
+  height: 38px;
+  font-family: var(--font-alt);
+  font-size: 16px;
+  outline: none;
+  color: var(--color-text);
+  background-color: var(--color-surface);
+  transition: border var(--transition), box-shadow var(--transition);
+}
+.button_form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  width: 85px;
+  background-color: var(--color-accent);
+  color: var(--color-white);
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background var(--transition), transform var(--transition);
+}
+
+.button_form:hover {
+  background-color: var(--color-accent-hover);
+  transform: translateY(-1px);
+}
+
+.select {
+  border: none;
+  border-radius: 6px;
+  width: 85px;
+  padding: 8px;
+  background-color: var(--color-accent);
+  color: var(--color-white);
+  font-weight: 500;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background var(--transition);
+}
+
+.select:hover {
+  background-color: var(--color-accent-hover);
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto 20px;
+}
+/* item li */
+.list_item {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  min-height: 80px;
+  padding: 5px 10px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background var(--transition), border var(--transition);
+}
+
+.list_item:hover {
+  background-color: var(--color-hover);
+}
+
+.list_checkbox {
+  accent-color: var(--color-accent);
+  min-width: 1.5em;
+  height: 1.5em;
+}
+.list_title {
+  font-size: 16px;
+  line-height: 1.5;
+  padding: 5px 15px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.list_actions button {
+  /* width: 30px; */
+  height: 30px;
+  padding: 0;
+  background-color: var(--color-accent);
+  border: none;
+  border-radius: 20%;
+}
+
+.list_actions button:hover {
+  background-color: var(--color-accent-hover);
+  transform: translateY(-1px);
+}

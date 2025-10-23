@@ -1,42 +1,108 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+/* A Modern CSS Reset  */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+* {
+  margin: 0;
 }
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
 }
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+input,
+button,
+textarea,
+select {
+  font: inherit;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
+ul[class],
+ol[class] {
+  padding: 0;
+  list-style: none;
 }
 
-.read-the-docs {
-  color: #888;
+/* Светлая тема  контраст для WCAG AA*/
+:root {
+  --color-bg: #f7f7f7;
+  --color-surface: #ffffff;
+
+  --color-text: #212121;
+  --color-placeholder: #707070;
+
+  --color-border: #e0e0e0;
+  --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+
+  --color-accent: #5a51d6;
+  --color-hover: rgba(90, 81, 214, 0.1);
+  --color-accent-hover: #4e46c7;
+
+  --color-success: #1f8a37;
+  --color-error: #c42d3c;
+  --color-utility: #a84c00;
+  --color-utility-hover: #c85a00;
+
+  /* Основные цвета */
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-gray: #cccccc;
+
+  --font-main: 'Kanit', sans-serif;
+  --font-alt: 'Inter', sans-serif;
+  --transition: 0.25s ease;
+}
+
+/* Тёмная тема -  WCAG AA */
+.dark-theme {
+  --color-bg: #121212;
+  --color-surface: #1e1e1e;
+
+  --color-text: #f5f5f5;
+  --color-placeholder: #a3a3a3;
+
+  --color-border: #3a3a3a;
+  --shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+
+  --color-accent: #675ee3;
+  --color-hover: rgba(160, 153, 255, 0.15);
+  --color-accent-hover: #756ced;
+
+  --color-success: #55c472;
+  --color-error: #ff7b7b;
+  --color-utility: #ad5900;
+  --color-utility-hover: #b96300;
+}
+
+body {
+  font-family: var(--font-main);
+  color: var(--color-text);
+  margin: 0;
+  background-color: var(--color-bg);
+  transition: background-color var(--transition), color var(--transition);
+  min-width: 320px;
+}
+.app {
+  min-height: 100vh;
+  padding: 35px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 35px;
 }
