@@ -9,7 +9,7 @@ export const dictionary = {
     optionComplete: 'Виконані',
     optionIncomplete: 'Невиконані',
     optionFavorite: 'Улюблені',
-    emptyMessage: 'Нема задач...',
+    emptyMessage: 'Нема справ...',
     footerText:
       '&copy; 2025. Todo Project. Дизайн та розробка: <a href="https://github.com/id753" target="_blank" rel="noopener noreferrer">ID753</a>',
     langToggle: 'EN',
