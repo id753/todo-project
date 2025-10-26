@@ -10,7 +10,7 @@ const Header = ({ theme, toggleTheme, lang, toggleLang }) => {
     <header className={s.header}>
       <a className={s.title_container} href="./index.html">
         <img
-          src="./public/undraw_add-notes_9xls-removebg-preview2.png"
+          src="/undraw_add-notes_9xls-removebg-preview2.png"
           className={s.icon}
           width="50"
           alt="Todo List logo"

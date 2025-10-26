@@ -206,7 +206,7 @@ const TodoList = () => {
         <li className={s.list_item_empty}>
           <div className={s.image_container}>
             <img
-              src="./public/undraw_completed-tasks_1j9z-removebg-preview.png"
+              src="/undraw_completed-tasks_1j9z-removebg-preview.png"
               className={s.img_empty}
               width="120"
               alt=""
