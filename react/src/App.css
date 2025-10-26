@@ -100,7 +100,7 @@ body {
 }
 .app {
   min-height: 100vh;
-  padding: 35px 20px;
+  padding: 35px 20px 0 20px;
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -40,7 +40,7 @@ export const SunIcon = () => (
 );
 // Вверх
 export const UpIcon = () => (
-  <svg className={s.icon} height="20">
+  <svg className={s.icon} width="25" height="25">
     <use href={SVG_SPRITE + 'icon-up'}></use>
   </svg>
 );
