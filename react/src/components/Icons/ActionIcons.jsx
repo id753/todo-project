@@ -1,7 +1,7 @@
 import React from 'react';
 import s from './ActionIcons.module.css';
 
-const SVG_SPRITE = './public/symbol-defs.svg#';
+const SVG_SPRITE = '/symbol-defs.svg#';
 
 // 1. Иконка Избранного
 export const FavoriteIcon = ({ isFavorite }) => {

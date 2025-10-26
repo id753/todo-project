@@ -3,13 +3,13 @@
     {
       "id": "150ac32b-2ede-4c10-a121-8e127d50b725",
       "title": "Связать шарф",
-      "completed": false,
+      "completed": true,
       "isFavorite": true
     },
     {
       "id": "bd7e3dbe-1af7-4538-9315-9c6640cb3047",
       "title": "Нарисовать картину акварелью",
-      "completed": false,
+      "completed": true,
       "isFavorite": false
     },
     {
@@ -22,7 +22,7 @@
       "id": "c953901b-0934-418a-b33b-2d6b8bb87f51",
       "title": "Построить замок из домино",
       "completed": true,
-      "isFavorite": false
+      "isFavorite": true
     }
   ]
 }
