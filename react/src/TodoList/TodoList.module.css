@@ -111,11 +111,15 @@
   margin-top: 0;
   margin-bottom: 0;
 }
-
+.list_actions {
+  display: flex;
+}
 .list_actions button {
-  /* width: 30px; */
+  width: 30px;
   height: 30px;
-  padding: 0;
+  /* padding: 0; */
+  margin-right: 3px;
+
   background-color: var(--color-accent);
   border: none;
   border-radius: 20%;
@@ -124,4 +128,23 @@
 .list_actions button:hover {
   background-color: var(--color-accent-hover);
   transform: translateY(-1px);
+}
+.edit_input {
+  width: 100%;
+  margin: 15px;
+  font-size: 16px;
+  line-height: 1.5;
+  padding: 5px 15px;
+}
+
+.list_item_empty {
+  list-style: none;
+}
+.empty_message {
+  font-weight: 400;
+  font-size: 18px;
+  color: var(--color-text);
+  /* margin-top: 15px; */
+  text-align: center;
+  opacity: 0.8;
 }
