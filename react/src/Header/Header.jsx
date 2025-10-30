@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { AppContext } from '../context/AppContext';
+import { useTranslation } from 'react-i18next';
 import { MoonIcon, SunIcon } from '../components/Icons/ActionIcons';
 import s from './Header.module.css';
-import { useTranslation } from 'react-i18next';
 
-const Header = ({ theme, toggleTheme, lang, toggleLang }) => {
+const Header = () => {
   const { t } = useTranslation();
-
+  const { theme, toggleTheme, lang, toggleLang } = useContext(AppContext);
   return (
     <header className={s.header}>
       <a className={s.title_container} href="./index.html">

@@ -209,7 +209,7 @@ const TodoList = () => {
               src="/undraw_completed-tasks_1j9z-removebg-preview.png"
               className={s.img_empty}
               width="120"
-              alt=""
+              alt="No todos"
             />
             <h2 className={s.empty_message}>{t('emptyMessage')}</h2>
           </div>
