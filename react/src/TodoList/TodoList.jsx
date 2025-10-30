@@ -18,7 +18,7 @@ const TodoList = () => {
   const FILTER_STATUS_KEY = 'filterStatus';
   const SEARCH_QUERY_KEY = 'SearchQuery';
 
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState(todosData.todos || []);
   const [newValue, setNewValue] = useState('');
   const [searchQuery, setSearchQuery] = useState(
     localStorage.getItem(SEARCH_QUERY_KEY) || ''
@@ -35,14 +35,8 @@ const TodoList = () => {
           setTodos(serverTodos);
           return;
         }
-        if (todosData) {
-          setTodos(todosData);
-          //   Одновременно сохраняем дефолтные данные на сервер
-          for (const todo of todosData) {
-            await createTodo(todo);
-          }
-        }
       } catch (error) {
+        setTodos(todosData.todos);
         console.error(error);
       }
     };
@@ -91,9 +85,9 @@ const TodoList = () => {
   });
 
   const deleteTodo = async id => {
+    setTodos(prev => prev.filter(item => item.id !== id));
     try {
       await deleteTodoApi(id);
-      setTodos(prev => prev.filter(item => item.id !== id));
     } catch (error) {
       console.error(error);
     }
@@ -108,11 +102,10 @@ const TodoList = () => {
       completed: false,
       isFavorite: false,
     };
-
+    setTodos(prev => [...prev, newTodo]);
+    setNewValue('');
     try {
       const saveTodo = await createTodo(newTodo);
-      setTodos(prev => [...prev, saveTodo]);
-      setNewValue('');
     } catch (error) {
       console.error(error);
     }
@@ -122,13 +115,13 @@ const TodoList = () => {
     const todoUpdate = todos.find(todo => todo.id === id);
     if (!todoUpdate) return;
     const newFavoriteStatus = !todoUpdate.isFavorite;
+    setTodos(prev =>
+      prev.map(todo =>
+        todo.id === id ? { ...todo, isFavorite: newFavoriteStatus } : todo
+      )
+    );
     try {
       await favoriteTodoApi(id, newFavoriteStatus);
-      setTodos(prev =>
-        prev.map(todo =>
-          todo.id === id ? { ...todo, isFavorite: newFavoriteStatus } : todo
-        )
-      );
     } catch (error) {
       console.log(error);
     }
@@ -137,13 +130,13 @@ const TodoList = () => {
     const todoUpdate = todos.find(todo => todo.id === id);
     if (!todoUpdate) return;
     const newCompletedStatus = !todoUpdate.completed;
+    setTodos(prev =>
+      prev.map(todo =>
+        todo.id === id ? { ...todo, completed: newCompletedStatus } : todo
+      )
+    );
     try {
       await completedTodoApi(id, newCompletedStatus);
-      setTodos(prev =>
-        prev.map(todo =>
-          todo.id === id ? { ...todo, completed: newCompletedStatus } : todo
-        )
-      );
     } catch (error) {
       console.log(error);
     }
@@ -151,13 +144,13 @@ const TodoList = () => {
 
   const editTodo = async (id, newTitle) => {
     if (!newTitle.trim()) return;
+    setTodos(prev =>
+      prev.map(todo =>
+        todo.id === id ? { ...todo, title: newTitle.trim() } : todo
+      )
+    );
     try {
       await editTodoApi(id, newTitle.trim());
-      setTodos(prev =>
-        prev.map(todo =>
-          todo.id === id ? { ...todo, title: newTitle.trim() } : todo
-        )
-      );
     } catch (error) {
       console.log(error);
     }
