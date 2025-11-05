@@ -1,4 +1,5 @@
 react
 https://todo-project-zeta-ten.vercel.app/
+</br>
 redux
-    todo-project-redux.vercel.app
+https://todo-project-redux.vercel.app/
