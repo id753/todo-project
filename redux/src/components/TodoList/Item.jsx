@@ -1,17 +1,18 @@
 import { React, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import {
-  deleteTodo,
-  toggleComplete,
-  toggleFavorite,
-  editTodo,
-} from '../../redux/TodoListSlice';
+// import {
+//   deleteTodo,
+//   toggleComplete,
+//   toggleFavorite,
+//   editTodo,
+// } from '../../redux/TodoListSlice';
 import {
   deleteTodoThunk,
   editTodoThunk,
   toggleCompleteThunk,
   toggleFavoriteThunk,
 } from '../../redux/operations';
+import { EditIcon, DeleteIcon, FavoriteIcon } from '../Icons/ActionIcons';
 
 const Item = ({ id, title, completed, isFavorite }) => {
   const dispatch = useDispatch();
@@ -84,10 +85,15 @@ const Item = ({ id, title, completed, isFavorite }) => {
             )
           }
         >
-          {isFavorite ? 'like' : 'dislike'}
+          {/* {isFavorite ? 'like' : 'dislike'} */}
+          <FavoriteIcon isFavorite={isFavorite} />
         </button>
-        <button onClick={() => handleEdit(id)}>edit</button>
-        <button onClick={() => dispatch(deleteTodoThunk(id))}>delete</button>
+        <button onClick={() => handleEdit(id)}>
+          <EditIcon />
+        </button>
+        <button onClick={() => dispatch(deleteTodoThunk(id))}>
+          <DeleteIcon />
+        </button>
       </div>
     </li>
   );

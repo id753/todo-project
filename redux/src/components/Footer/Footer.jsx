@@ -2,9 +2,18 @@ import React from 'react';
 
 const Footer = () => {
   return (
-    <div>
-      <p>FOOTER</p>
-    </div>
+    <footer>
+      <p>
+        {/* {t('footerText')} */}
+        <a
+          href="https://github.com/id753"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          ID753
+        </a>
+      </p>
+    </footer>
   );
 };
 

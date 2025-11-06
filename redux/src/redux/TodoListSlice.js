@@ -18,16 +18,18 @@ const initialState = {
   ],
   filter: '',
   filterByStatus: 'all',
-  // добавить лоадинг,ерор позже
+
+  isLoading: false,
+  isError: false,
 };
 
 const slice = createSlice({
   name: 'todos',
   initialState,
   reducers: {
-    addNewTodo: (state, action) => {
-      state.todos.push(action.payload);
-    },
+    // addNewTodo: (state, action) => {
+    //   state.todos.push(action.payload);
+    // },
     // deleteTodo: (state, action) => {
     //   state.todos = state.todos.filter(item => item.id !== action.payload);
     // },
@@ -58,13 +60,28 @@ const slice = createSlice({
     filterStatus: (state, action) => {
       state.filterByStatus = action.payload;
     },
+    setLoading: (state, action) => {
+      state.isLoading = action.payload;
+    },
+    setError: (state, action) => {
+      state.isLoading = action.payload;
+    },
   },
   extraReducers: builder => {
     builder
       .addCase(fetchData.fulfilled, (state, action) => {
         state.todos = action.payload;
+        state.isLoading = false;
       })
-      // add rej pend with load err
+      .addCase(fetchData.rejected, (state, action) => {
+        state.isError = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(fetchData.pending, (state, action) => {
+        state.isLoading = true;
+        state.isError = false;
+      })
+
       .addCase(deleteTodoThunk.fulfilled, (state, action) => {
         state.todos = state.todos.filter(item => item.id !== action.payload.id);
       })
@@ -90,8 +107,13 @@ export const {
   editTodo,
   changeFilter,
   filterStatus,
+  setLoading,
+  setError,
 } = slice.actions;
 
 export const selectTodos = state => state.todos.todos;
 export const selectFilter = state => state.todos.filter;
 export const selectFilterByStatus = state => state.todos.filterByStatus;
+
+export const selectIsLoading = state => state.todos.isLoading;
+export const selectIsError = state => state.todos.isError;

@@ -1,0 +1,22 @@
+.scroll_to_top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  border: none;
+  background-color: var(--color-utility);
+  color: var(--color-white);
+  width: 30px;
+  height: 30px;
+  padding: 2px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background var(--transition), opacity var(--transition);
+  /* opacity: 0; */
+  /* pointer-events: none; */
+  z-index: 1000;
+}
+
+.scroll_to_top:hover {
+  background-color: var(--color-utility-hover);
+}
