@@ -1,22 +1,31 @@
 import React from 'react';
 import { Formik, Form, Field } from 'formik';
-import { useDispatch } from 'react-redux';
-import { changeFilter, filterStatus } from '../../redux/TodoListSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  changeFilter,
+  filterStatus,
+  selectFilter,
+  selectFilterByStatus,
+} from '../../redux/TodoListSlice';
 
 const SearchBar = () => {
   const dispatch = useDispatch();
+  const filterByStatus = useSelector(selectFilterByStatus);
+  const filterByValue = useSelector(selectFilter);
 
   return (
     <div>
       <Formik>
         <Form>
           <Field
+            value={filterByValue}
             onChange={e => dispatch(changeFilter(e.target.value))}
             name="todo"
             placeholder="search todo"
           />
           <label htmlFor="selectedTodos"></label>
           <Field
+            value={filterByStatus}
             onChange={e => {
               dispatch(filterStatus(e.target.value));
             }}
