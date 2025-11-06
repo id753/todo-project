@@ -3,6 +3,7 @@ import { Formik, Field, Form } from 'formik';
 import { useDispatch } from 'react-redux';
 import { nanoid } from '@reduxjs/toolkit';
 import { addNewTodo } from '../../redux/TodoListSlice';
+import { addTodoThunk } from '../../redux/operations';
 
 const AddForm = () => {
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ const AddForm = () => {
       isFavorite: false,
     };
 
-    dispatch(addNewTodo(newTodo));
+    dispatch(addTodoThunk(newTodo));
 
     // console.log(newTodo);
   };

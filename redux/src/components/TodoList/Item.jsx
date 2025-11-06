@@ -6,6 +6,12 @@ import {
   toggleFavorite,
   editTodo,
 } from '../../redux/TodoListSlice';
+import {
+  deleteTodoThunk,
+  editTodoThunk,
+  toggleCompleteThunk,
+  toggleFavoriteThunk,
+} from '../../redux/operations';
 
 const Item = ({ id, title, completed, isFavorite }) => {
   const dispatch = useDispatch();
@@ -20,11 +26,10 @@ const Item = ({ id, title, completed, isFavorite }) => {
 
   const handleEditSave = () => {
     if (editValue.trim() && editValue !== title) {
-      dispatch(editTodo({ id: id, title: editValue.trim() }));
+      dispatch(editTodoThunk({ id: id, title: editValue.trim() }));
     }
     setIsEdit(false);
   };
-
   const handleKeyDown = e => {
     if (e.key === 'Enter') {
       handleEditSave();
@@ -40,7 +45,16 @@ const Item = ({ id, title, completed, isFavorite }) => {
       <input
         type="checkbox"
         checked={completed}
-        onChange={() => dispatch(toggleComplete(id))}
+        onChange={() =>
+          dispatch(
+            toggleCompleteThunk({
+              id,
+              title,
+              completed: !completed,
+              isFavorite,
+            })
+          )
+        }
       />
       {isEdit ? (
         <>
@@ -58,11 +72,22 @@ const Item = ({ id, title, completed, isFavorite }) => {
       )}
 
       <div>
-        <button onClick={() => dispatch(toggleFavorite(id))}>
+        <button
+          onClick={() =>
+            dispatch(
+              toggleFavoriteThunk({
+                id,
+                title,
+                completed,
+                isFavorite: !isFavorite,
+              })
+            )
+          }
+        >
           {isFavorite ? 'like' : 'dislike'}
         </button>
         <button onClick={() => handleEdit(id)}>edit</button>
-        <button onClick={() => dispatch(deleteTodo(id))}>delete</button>
+        <button onClick={() => dispatch(deleteTodoThunk(id))}>delete</button>
       </div>
     </li>
   );
