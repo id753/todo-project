@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchData } from '../../redux/operations';
+
 import AddForm from './AddForm';
 import SearchBar from './SearchBar';
 import List from './List';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchData } from '../../redux/operations';
+
 import { selectIsError, selectIsLoading } from '../../redux/TodoListSlice';
 
 const TodoList = () => {

@@ -4,9 +4,11 @@ import { useDispatch } from 'react-redux';
 import { nanoid } from '@reduxjs/toolkit';
 import { addNewTodo } from '../../redux/TodoListSlice';
 import { addTodoThunk } from '../../redux/operations';
+import { useTranslation } from 'react-i18next';
 
 const AddForm = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const initialState = {
     todo: '',
@@ -21,7 +23,6 @@ const AddForm = () => {
     };
 
     dispatch(addTodoThunk(newTodo));
-
     // console.log(newTodo);
   };
 
@@ -29,8 +30,8 @@ const AddForm = () => {
     <div>
       <Formik initialValues={initialState} onSubmit={onSubmit}>
         <Form>
-          <Field name="todo" placeholder="Add todo" />
-          <button type="submit">ADD</button>
+          <Field name="todo" placeholder={t('addPlaceholder')} />
+          <button type="submit">{t('addButton')}</button>
         </Form>
       </Formik>
     </div>

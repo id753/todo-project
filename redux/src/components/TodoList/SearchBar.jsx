@@ -1,6 +1,8 @@
+import { useDispatch, useSelector } from 'react-redux';
 import React from 'react';
 import { Formik, Form, Field } from 'formik';
-import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+
 import {
   changeFilter,
   filterStatus,
@@ -10,6 +12,8 @@ import {
 
 const SearchBar = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
+
   const filterByStatus = useSelector(selectFilterByStatus);
   const filterByValue = useSelector(selectFilter);
 
@@ -21,7 +25,7 @@ const SearchBar = () => {
             value={filterByValue}
             onChange={e => dispatch(changeFilter(e.target.value))}
             name="todo"
-            placeholder="search todo"
+            placeholder={t('searchPlaceholder')}
           />
           <label htmlFor="selectedTodos"></label>
           <Field
@@ -33,10 +37,10 @@ const SearchBar = () => {
             id="selectedTodos"
             as="select"
           >
-            <option value="all">all</option>
-            <option value="complete">complete</option>
-            <option value="incomplete">incomplete</option>
-            <option value="favorite">favorite</option>
+            <option value="all">{t('optionAll')}</option>
+            <option value="complete">{t('optionComplete')}</option>
+            <option value="incomplete">{t('optionIncomplete')}</option>
+            <option value="favorite">{t('optionFavorite')}</option>
           </Field>
         </Form>
       </Formik>

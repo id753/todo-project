@@ -1,5 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+
 import {
   selectLanguage,
   selectTheme,
@@ -10,6 +12,8 @@ import { MoonIcon, SunIcon } from '../Icons/ActionIcons';
 
 const Header = () => {
   const dispatch = useDispatch();
+
+  const { t } = useTranslation();
 
   const theme = useSelector(selectTheme);
   const language = useSelector(selectLanguage);
@@ -23,7 +27,7 @@ const Header = () => {
           alt="Todo List logo"
         />
 
-        <h1>todo list</h1>
+        <h1>{t('title')}</h1>
       </a>
 
       <div>

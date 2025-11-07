@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import i18n from '../dictionary/i18n.jsx';
 
 const initialState = {
   theme: 'light',
@@ -13,7 +14,8 @@ const settingsSlice = createSlice({
       state.theme = state.theme === 'light' ? 'dark' : 'light';
     },
     toggleLang: (state, action) => {
-      state.language = state.language === 'EN' ? 'УКР' : 'EN';
+      state.language = state.language === 'en' ? 'uk' : 'en';
+      i18n.changeLanguage(state.language); // синхронизация с i18next
     },
   },
 });

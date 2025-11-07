@@ -1,10 +1,13 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 const Footer = () => {
+  const { t } = useTranslation();
+
   return (
     <footer>
       <p>
-        {/* {t('footerText')} */}
+        {t('footerText')}
         <a
           href="https://github.com/id753"
           target="_blank"

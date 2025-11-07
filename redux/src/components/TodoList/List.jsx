@@ -1,6 +1,9 @@
 import React from 'react';
-import Item from './Item';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+
+import Item from './Item';
+
 import {
   selectFilter,
   selectFilterByStatus,
@@ -8,6 +11,8 @@ import {
 } from '../../redux/TodoListSlice';
 
 const List = () => {
+  const { t } = useTranslation();
+
   const todos = useSelector(selectTodos);
   const filter = useSelector(selectFilter);
   const filterByStatus = useSelector(selectFilterByStatus);
@@ -30,9 +35,23 @@ const List = () => {
   };
   return (
     <ul>
-      {getSortedData().map(item => (
-        <Item {...item} key={item.id} />
-      ))}
+      <ul>
+        {getSortedData().length === 0 && (
+          <li>
+            <div>
+              <img
+                src="/undraw_completed-tasks_1j9z-removebg-preview.png"
+                width="120"
+                alt="No todos"
+              />
+              <h2>{t('emptyMessage')}</h2>
+            </div>
+          </li>
+        )}
+
+        {getSortedData().length > 0 &&
+          getSortedData().map(item => <Item {...item} key={item.id} />)}
+      </ul>
     </ul>
   );
 };
