@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { FC } from 'react';
 import s from './ActionIcons.module.css';
+import { Todo } from '../../types';
 
 const SVG_SPRITE = '/symbol-defs.svg#';
 
-// 1. Иконка Избранного
-export const FavoriteIcon = ({ isFavorite }) => {
+interface ActionProps {
+  isFavorite: boolean;
+}
+
+export const FavoriteIcon: FC<ActionProps> = ({ isFavorite }) => {
   const iconId = isFavorite ? 'icon-heart-fill' : 'icon-heart';
   return (
     <svg className={s.icon} height="18">
@@ -13,14 +17,12 @@ export const FavoriteIcon = ({ isFavorite }) => {
   );
 };
 
-// 2. Иконка Редактирования
 export const EditIcon = () => (
   <svg className={s.icon} height="18">
     <use href={SVG_SPRITE + 'icon-pencil'}></use>
   </svg>
 );
 
-// 3. Иконка Удаления
 export const DeleteIcon = () => (
   <svg className={s.icon} height="18">
     <use href={SVG_SPRITE + 'icon-trash'}></use>

@@ -1,12 +1,19 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, FC, KeyboardEvent, useState } from 'react';
 import {
   FavoriteIcon,
   EditIcon,
   DeleteIcon,
 } from '../components/Icons/ActionIcons';
 import s from './TodoList.module.css';
+import { Todo } from '../types';
 
-const TodoItem = ({
+interface TodoItemProps extends Todo {
+  onDeleteTodo: (id: string) => Promise<void>;
+  onToggleFavorite: (id: string) => Promise<void>;
+  onToggleComplete: (id: string) => Promise<void>;
+  onEditTodo: (id: string, newTitle: string) => Promise<void>;
+}
+const TodoItem: FC<TodoItemProps> = ({
   id,
   title,
   completed,
@@ -16,8 +23,8 @@ const TodoItem = ({
   onToggleComplete,
   onEditTodo,
 }) => {
-  const [isEdit, setIsEdit] = useState(false);
-  const [editValue, setEditValue] = useState(title);
+  const [isEdit, setIsEdit] = useState<boolean>(false);
+  const [editValue, setEditValue] = useState<string>(title);
   const handleEdit = () => {
     setIsEdit(true);
     setEditValue(title);
@@ -26,7 +33,7 @@ const TodoItem = ({
     onEditTodo(id, editValue);
     setIsEdit(false);
   };
-  const handleKeyDown = e => {
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       handleEditSave();
     }
@@ -47,7 +54,9 @@ const TodoItem = ({
         <input
           type="text"
           value={editValue}
-          onChange={e => setEditValue(e.target.value)}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            setEditValue(e.target.value)
+          }
           onKeyDown={handleKeyDown}
           onBlur={handleBlur}
           className={s.edit_input}
@@ -60,7 +69,7 @@ const TodoItem = ({
         <button onClick={() => onToggleFavorite(id)}>
           <FavoriteIcon isFavorite={isFavorite} />
         </button>
-        <button onClick={() => handleEdit(id)}>
+        <button onClick={handleEdit}>
           <EditIcon />
         </button>
         <button onClick={() => onDeleteTodo(id)}>

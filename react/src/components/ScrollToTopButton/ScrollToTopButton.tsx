@@ -3,7 +3,7 @@ import s from './ScrollToTopButton.module.css';
 import { UpIcon } from '../../components/Icons/ActionIcons';
 
 const ScrollToTopButton = () => {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
 
   useEffect(() => {
     const handleScroll = () => {

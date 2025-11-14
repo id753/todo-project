@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import TodoItem from './TodoItem';
 import todosData from './../assets/db.json';
@@ -11,6 +11,9 @@ import {
   editTodoApi,
 } from '../services/api';
 import s from '../TodoList/TodoList.module.css';
+import { Todo } from '../types';
+
+type FilterStatus = 'all' | 'complete' | 'incomplete' | 'favorite';
 
 const TodoList = () => {
   const { t } = useTranslation();
@@ -18,25 +21,25 @@ const TodoList = () => {
   const FILTER_STATUS_KEY = 'filterStatus';
   const SEARCH_QUERY_KEY = 'SearchQuery';
 
-  const [todos, setTodos] = useState(todosData.todos || []);
-  const [newValue, setNewValue] = useState('');
-  const [searchQuery, setSearchQuery] = useState(
+  const [todos, setTodos] = useState<Todo[]>(todosData.todos || []);
+  const [newValue, setNewValue] = useState<string>('');
+  const [searchQuery, setSearchQuery] = useState<string>(
     localStorage.getItem(SEARCH_QUERY_KEY) || ''
   );
-  const [filterStatus, setFilterStatus] = useState(
-    localStorage.getItem(FILTER_STATUS_KEY) || 'all'
+  const [filterStatus, setFilterStatus] = useState<FilterStatus>(
+    (localStorage.getItem(FILTER_STATUS_KEY) as FilterStatus) || 'all'
   );
 
   useEffect(() => {
-    const loadTodos = async () => {
+    const loadTodos = async (): Promise<void> => {
       try {
-        const serverTodos = await fetchData();
+        const serverTodos: Todo[] = await fetchData();
         if (serverTodos && serverTodos.length > 0) {
           setTodos(serverTodos);
           return;
         }
-      } catch (error) {
-        setTodos(todosData.todos);
+      } catch (error: unknown) {
+        setTodos(todosData.todos as Todo[]);
         console.error(error);
       }
     };
@@ -48,15 +51,15 @@ const TodoList = () => {
     localStorage.setItem(FILTER_STATUS_KEY, filterStatus);
   }, [searchQuery, filterStatus]);
 
-  const handleSubmit = e => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     addNewTodo();
   };
-  const handleSearchSubmit = e => {
+  const handleSearchSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
   };
   const filteredTodos = todos.filter(item => {
-    const searchValue = item.title
+    const searchValue: boolean = item.title
       .toLowerCase()
       .includes(searchQuery.toLowerCase());
 
@@ -65,7 +68,8 @@ const TodoList = () => {
     //     (filterStatus === 'complete' && item.completed) ||
     //     (filterStatus === 'incomplete' && !item.completed) ||
     //     (filterStatus === 'favorite' && item.isFavorite);
-    let searchStatus = true;
+
+    let searchStatus: boolean = true;
     switch (filterStatus) {
       case 'complete':
         searchStatus = item.completed === true;
@@ -84,11 +88,11 @@ const TodoList = () => {
     return searchValue && searchStatus;
   });
 
-  const deleteTodo = async id => {
+  const deleteTodo = async (id: string): Promise<void> => {
     setTodos(prev => prev.filter(item => item.id !== id));
     try {
       await deleteTodoApi(id);
-    } catch (error) {
+    } catch (error: unknown) {
       console.error(error);
     }
   };
@@ -96,7 +100,7 @@ const TodoList = () => {
   const addNewTodo = async () => {
     if (!newValue.trim()) return;
 
-    const newTodo = {
+    const newTodo: Todo = {
       id: crypto.randomUUID(),
       title: newValue,
       completed: false,
@@ -105,13 +109,13 @@ const TodoList = () => {
     setTodos(prev => [...prev, newTodo]);
     setNewValue('');
     try {
-      const saveTodo = await createTodo(newTodo);
-    } catch (error) {
+      const saveTodo: Todo = await createTodo(newTodo);
+    } catch (error: unknown) {
       console.error(error);
     }
   };
 
-  const toggleFavorite = async id => {
+  const toggleFavorite = async (id: string) => {
     const todoUpdate = todos.find(todo => todo.id === id);
     if (!todoUpdate) return;
     const newFavoriteStatus = !todoUpdate.isFavorite;
@@ -122,11 +126,11 @@ const TodoList = () => {
     );
     try {
       await favoriteTodoApi(id, newFavoriteStatus);
-    } catch (error) {
+    } catch (error: unknown) {
       console.log(error);
     }
   };
-  const toggleComplete = async id => {
+  const toggleComplete = async (id: string) => {
     const todoUpdate = todos.find(todo => todo.id === id);
     if (!todoUpdate) return;
     const newCompletedStatus = !todoUpdate.completed;
@@ -137,12 +141,12 @@ const TodoList = () => {
     );
     try {
       await completedTodoApi(id, newCompletedStatus);
-    } catch (error) {
+    } catch (error: unknown) {
       console.log(error);
     }
   };
 
-  const editTodo = async (id, newTitle) => {
+  const editTodo = async (id: string, newTitle: string) => {
     if (!newTitle.trim()) return;
     setTodos(prev =>
       prev.map(todo =>
@@ -151,7 +155,7 @@ const TodoList = () => {
     );
     try {
       await editTodoApi(id, newTitle.trim());
-    } catch (error) {
+    } catch (error: unknown) {
       console.log(error);
     }
   };
@@ -174,7 +178,9 @@ const TodoList = () => {
       <form onSubmit={handleSearchSubmit} className={s.todoForm}>
         <input
           // 3 filter
-          onChange={e => setSearchQuery(e.target.value)}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            setSearchQuery(e.target.value)
+          }
           value={searchQuery}
           placeholder={t('searchPlaceholder')}
           name="search"
@@ -182,9 +188,11 @@ const TodoList = () => {
         />
         <select
           // 3 filter
-          onChange={e => setFilterStatus(e.target.value)}
+          onChange={(e: ChangeEvent<HTMLSelectElement>) =>
+            setFilterStatus(e.target.value as FilterStatus)
+          }
           value={filterStatus}
-          type="text"
+          // type="text"
           name="select"
           className={s.select}
         >

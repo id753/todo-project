@@ -1,3 +1,10 @@
 {
-  "todos": []
+  "todos": [
+    {
+      "id": "e1f0cad6-96d5-47f6-82c4-e059d0c143c8",
+      "title": "Связать еще шарф",
+      "completed": false,
+      "isFavorite": false
+    }
+  ]
 }
