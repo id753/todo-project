@@ -1,4 +1,12 @@
-.visually-hidden {
+@import 'tailwindcss';
+
+@layer utilities {
+  .font-alt {
+    font-family: var(--font-alt) !important;
+  }
+}
+/* В Tailwind CSS для этого есть специальная встроенная утилита sr-only. */
+/* .visually-hidden {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -8,36 +16,7 @@
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
-}
-
-/* A Modern CSS Reset  */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-* {
-  margin: 0;
-}
-img,
-picture,
-video,
-canvas,
-svg {
-  display: block;
-  max-width: 100%;
-}
-input,
-button,
-textarea,
-select {
-  font: inherit;
-}
-ul[class],
-ol[class] {
-  padding: 0;
-  list-style: none;
-}
+} */
 
 /* Светлая тема  контраст для WCAG AA*/
 :root {
@@ -90,21 +69,48 @@ ol[class] {
   --color-utility-hover: #b96300;
 }
 
-body {
+/* A Modern CSS Reset  */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+* {
+  /* margin: 0; */
+}
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+input,
+/* button, */
+textarea,
+select {
+  /* font: inherit; */
+}
+ul[class],
+ol[class] {
+  padding: 0;
+  list-style: none;
+}
+
+html {
   font-family: var(--font-main);
+  line-height: normal;
+}
+body {
+  /* font-family: var(--font-main); */
   color: var(--color-text);
   margin: 0;
   background-color: var(--color-bg);
-  transition: background-color var(--transition), color var(--transition);
+  transition:
+    background-color var(--transition),
+    color var(--transition);
   min-width: 320px;
-}
-.app {
-  min-height: 100vh;
-  padding: 35px 20px 0 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 35px;
 }
 
 :focus {

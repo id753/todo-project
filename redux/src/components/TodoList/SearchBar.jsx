@@ -18,17 +18,19 @@ const SearchBar = () => {
   const filterByValue = useSelector(selectFilter);
 
   return (
-    <div>
+    <div className="w-full">
       <Formik>
-        <Form>
+        <Form className="mb-[25px] flex w-full flex-wrap justify-center gap-[15px]">
           <Field
+            className="font-alt h-[38px] w-full max-w-[400px] flex-1 rounded-md border-2 border-solid border-(--color-accent) bg-(--color-surface) px-4 py-2 text-[16px] text-(--color-text) transition duration-(--transition) outline-none"
             value={filterByValue}
             onChange={e => dispatch(changeFilter(e.target.value))}
             name="todo"
             placeholder={t('searchPlaceholder')}
           />
-          <label htmlFor="selectedTodos"></label>
+          <label className="sr-only" htmlFor="selectedTodos"></label>
           <Field
+            className="w-[85px] cursor-pointer rounded-[6px] border-none bg-(--color-accent) p-2 text-[15px] font-medium text-(--color-white) transition-colors duration-(--transition) hover:bg-(--color-accent-hover)"
             value={filterByStatus}
             onChange={e => {
               dispatch(filterStatus(e.target.value));

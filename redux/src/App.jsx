@@ -24,7 +24,7 @@ function App() {
   }, [theme]);
 
   return (
-    <div className="app">
+    <div className="flex min-h-screen flex-col items-center gap-[35px] px-5 pt-[35px]">
       <Header />
       <TodoList />
       <Footer />

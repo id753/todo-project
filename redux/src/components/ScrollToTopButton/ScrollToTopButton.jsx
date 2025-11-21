@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import s from './ScrollToTopButton.module.css';
 import { UpIcon } from '../../components/Icons/ActionIcons';
 
 const ScrollToTopButton = () => {
@@ -26,7 +25,11 @@ const ScrollToTopButton = () => {
     return null;
   }
   return (
-    <button className={s.scroll_to_top} onClick={scrollToTop} type="button">
+    <button
+      className="rounded-2 opacity- (--transition) fixed right-[20px] bottom-[20px] z-1000 h-[30px] w-[30px] cursor-pointer rounded-[8px] border-none bg-(--color-utility) p-[2px] font-[600] text-(--color-white) transition duration-(--transition) hover:bg-(--color-utility-hover)"
+      onClick={scrollToTop}
+      type="button"
+    >
       <UpIcon />
     </button>
   );

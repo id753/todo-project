@@ -19,7 +19,7 @@ const TodoList = () => {
   const isLoading = useSelector(selectIsLoading);
 
   return (
-    <div>
+    <div className="flex w-full max-w-[800px] flex-col items-center rounded-[12px] bg-(--color-surface) px-[20px] py-[30px] shadow-(--shadow)">
       <AddForm />
       <SearchBar />
       <List />

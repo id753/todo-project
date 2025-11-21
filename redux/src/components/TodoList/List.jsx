@@ -34,17 +34,19 @@ const List = () => {
     }
   };
   return (
-    <ul>
-      <ul>
+    <div className="w-full">
+      <ul className="mx-auto mt-0 w-full max-w-[600px] list-none p-0 !pb-[20px]">
         {getSortedData().length === 0 && (
-          <li>
+          <li className="flex justify-center">
             <div>
               <img
                 src="/undraw_completed-tasks_1j9z-removebg-preview.png"
                 width="120"
                 alt="No todos"
               />
-              <h2>{t('emptyMessage')}</h2>
+              <h2 className="p-0 text-center text-[18px] font-[400] text-(--color-text) opacity-[0.8] transition-opacity">
+                {t('emptyMessage')}
+              </h2>
             </div>
           </li>
         )}
@@ -52,7 +54,7 @@ const List = () => {
         {getSortedData().length > 0 &&
           getSortedData().map(item => <Item {...item} key={item.id} />)}
       </ul>
-    </ul>
+    </div>
   );
 };
 

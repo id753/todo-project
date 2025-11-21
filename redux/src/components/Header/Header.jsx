@@ -10,6 +10,9 @@ import {
 } from '../../redux/settingsSlice';
 import { MoonIcon, SunIcon } from '../Icons/ActionIcons';
 
+const buttonToggle =
+  'border-none bg-(--color-utility) text-(--color-white) size-[30px] p-[2px] rounded-[8px] cursor-pointer text-[12px] font-semibold font-(--font-main) transition-colors  transition-(--transition) hover:bg-(--color-utility-hover)';
+
 const Header = () => {
   const dispatch = useDispatch();
 
@@ -19,22 +22,35 @@ const Header = () => {
   const language = useSelector(selectLanguage);
 
   return (
-    <header>
-      <a href="./index.html">
+    <header className="flex w-full max-w-[800px] items-center justify-between">
+      <a
+        href="./index.html"
+        className="decoration-none mr-auto ml-auto flex items-center gap-[5px]"
+      >
         <img
           src="/undraw_add-notes_9xls-removebg-preview2.png"
           width="50"
           alt="Todo List logo"
         />
 
-        <h1>{t('title')}</h1>
+        <h1 className="mr-auto ml-auto text-center text-[28px] font-bold text-(--color-text)">
+          {t('title')}
+        </h1>
       </a>
 
-      <div>
-        <button onClick={() => dispatch(toggleTheme())} type="button">
+      <div className="flex gap-[5px]">
+        <button
+          className={buttonToggle}
+          onClick={() => dispatch(toggleTheme())}
+          type="button"
+        >
           {theme === 'light' ? <MoonIcon /> : <SunIcon />}
         </button>
-        <button onClick={() => dispatch(toggleLang())} type="button">
+        <button
+          className={buttonToggle}
+          onClick={() => dispatch(toggleLang())}
+          type="button"
+        >
           {language === 'en' ? 'УКР' : 'EN'}
         </button>
       </div>

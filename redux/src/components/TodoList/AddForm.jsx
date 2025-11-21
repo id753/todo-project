@@ -27,11 +27,20 @@ const AddForm = () => {
   };
 
   return (
-    <div>
+    <div className="w-full">
       <Formik initialValues={initialState} onSubmit={onSubmit}>
-        <Form>
-          <Field name="todo" placeholder={t('addPlaceholder')} />
-          <button type="submit">{t('addButton')}</button>
+        <Form className="mb-[25px] flex w-full flex-wrap justify-center gap-[15px]">
+          <Field
+            className="font-alt h-[38px] w-full max-w-[400px] flex-1 rounded-md border-2 border-solid border-(--color-accent) bg-(--color-surface) px-4 py-2 text-[16px] text-(--color-text) transition duration-(--transition) outline-none"
+            name="todo"
+            placeholder={t('addPlaceholder')}
+          />
+          <button
+            className="flex w-[85px] transform cursor-pointer items-center justify-center gap-[6px] rounded-md border-none bg-(--color-accent) px-4 py-2 text-[15px] font-[600] text-(--color-white) transition duration-(--transition) hover:-translate-y-[1px] hover:bg-(--color-accent-hover)"
+            type="submit"
+          >
+            {t('addButton')}
+          </button>
         </Form>
       </Formik>
     </div>
