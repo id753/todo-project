@@ -23,7 +23,6 @@
 
 .main-links a {
   color: var(--color-error);
-  /* text-transform: uppercase; */
 }
 
 .main-links a:first-child {
