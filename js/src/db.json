@@ -1,3 +1,28 @@
 {
-  "todos": []
+  "todos": [
+    {
+      "id": "150ac32b-2ede-4c10-a121-8e127d50b725",
+      "title": "To do a watercolor paintin",
+      "completed": true,
+      "isFavorite": false
+    },
+    {
+      "id": "bd7e3dbe-1af7-4538-9315-9c6640cb3047",
+      "title": "To build a domino castle",
+      "completed": true,
+      "isFavorite": true
+    },
+    {
+      "id": "9134fb9e-666f-46f5-8ead-099c10e6b707",
+      "title": "To find a better job",
+      "completed": true,
+      "isFavorite": true
+    },
+    {
+      "id": "c953901b-0934-418a-b33b-2d6b8bb87f51",
+      "title": "To go on a 10-kilometer bike ride along a new route",
+      "completed": true,
+      "isFavorite": false
+    }
+  ]
 }
