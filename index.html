@@ -3,17 +3,75 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700&family=Kanit:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="js/src/style.css" />
+    <link rel="stylesheet" href="./index/index.css" />
+    <title>Todo project</title>
   </head>
   <body>
-    <header><h1>todo</h1></header>
+    <div id="app" class="app">
+      <header class="header">
+        <a class="title-container" href="./index.html">
+          <img
+            src="./js/public/undraw_add-notes_9xls-removebg-preview2.png"
+            class="img img-icon"
+            width="50"
+            alt="Todo List logo"
+          />
+          <h1 class="title">TODO LIST</h1>
+        </a>
+        <button type="button" class="theme-toggle" aria-label="Switch theme">
+          <svg class="icon" width="10" height="10">
+            <use href="./js/public/symbol-defs.svg#icon-moon"></use>
+          </svg>
+        </button>
+      </header>
 
-    <div></div>
-    <div>
-      <a href="https://id753.github.io/todo-project/js/">js</a>
-      <a href="https://todo-project-zeta-ten.vercel.app/">react</a>
-      <a href="https://todo-project-redux.vercel.app/">redux</a>
+      <main class="main-container">
+        <div>
+          <img
+            class="main-img"
+            src="./index/Снимок экрана 2025-11-21 191907.png"
+            alt="main"
+            width="400"
+          />
+        </div>
+        <div class="main-nav main-link">
+          <a
+            href="https://id753.github.io/todo-project/js/"
+            rel="noopener noreferrer"
+            >js</a
+          >
+          <a
+            href="https://todo-project-zeta-ten.vercel.app/"
+            rel="noopener noreferrer"
+            >react</a
+          >
+          <a
+            href="https://todo-project-redux.vercel.app/"
+            rel="noopener noreferrer"
+            >redux</a
+          >
+        </div>
+      </main>
     </div>
-    <footer></footer>
+
+    <footer>
+      <p class="footer-text">
+        &copy; 2025. Todo Project. Design and Development:
+        <a
+          href="https://github.com/id753"
+          target="_blank"
+          rel="noopener noreferrer"
+          >ID753</a
+        >
+      </p>
+    </footer>
+    <script type="module" src="./index/index.js"></script>
   </body>
 </html>

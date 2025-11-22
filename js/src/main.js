@@ -137,8 +137,8 @@ function createMarkup(arr) {
         type="checkbox" 
         class="list-checkbox" 
         aria-label="${completed ? unmarkLabel : markLabel} ${title}" ${
-        completed ? 'checked' : ''
-      }
+          completed ? 'checked' : ''
+        }
                    >
           <p class="list-title">${title}</p>
           <div class="list-actions">
