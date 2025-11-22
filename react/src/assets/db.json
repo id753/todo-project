@@ -3,14 +3,14 @@
     {
       "id": "150ac32b-2ede-4c10-a121-8e127d50b725",
       "title": "To do a watercolor paintin",
-      "completed": true,
+      "completed": false,
       "isFavorite": false
     },
     {
       "id": "bd7e3dbe-1af7-4538-9315-9c6640cb3047",
       "title": "To build a domino castle",
       "completed": true,
-      "isFavorite": true
+      "isFavorite": false
     },
     {
       "id": "9134fb9e-666f-46f5-8ead-099c10e6b707",
@@ -19,9 +19,21 @@
       "isFavorite": true
     },
     {
-      "id": "c953901b-0934-418a-b33b-2d6b8bb87f51",
-      "title": "To go on a 10-kilometer bike ride along a new route",
+      "id": "666617c0-2461-4d08-95d6-078f4f52eb22",
+      "title": "To go on a 1-kilometer bike ride along a new route",
       "completed": true,
+      "isFavorite": false
+    },
+    {
+      "id": "9ae6cc5a-3800-471f-860c-4ae6ddfe3176",
+      "title": "What is an Herbarium?",
+      "completed": true,
+      "isFavorite": false
+    },
+    {
+      "id": "341d63de-5725-479e-abb1-48a91b9681a4",
+      "title": "   To knit a scarf   ",
+      "completed": false,
       "isFavorite": false
     }
   ]

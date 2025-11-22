@@ -8,7 +8,7 @@
   background-color: var(--color-surface);
   border-radius: 12px;
   box-shadow: var(--shadow);
-  padding: 30px 50px;
+  padding: 30px 40px;
   transition:
     background var(--transition),
     box-shadow var(--transition);
@@ -18,14 +18,15 @@
 .main-nav {
   display: flex;
   flex-direction: column;
+  gap: 10px;
 }
 
-.main-link a {
+.main-links a {
   color: var(--color-error);
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
 }
 
-.main-link a:hover {
+.main-links a:hover {
   color: var(--color-accent-hover);
 }
 
@@ -42,7 +43,7 @@
     0 0 0 1px rgba(255, 255, 255, 0.05);
 }
 
-@media (max-width: 320px) {
+@media (max-width: 555px) {
   .title {
     font-size: 18px;
   }
