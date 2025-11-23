@@ -26,9 +26,11 @@
   /* text-transform: uppercase; */
 }
 
-.main-links a:first-child {
-  margin-bottom: 25px;
+.main-links a:last-child {
+  font-size: 14px;
+  margin-top: 25px;
   font-weight: bold;
+  text-align: end;
 }
 
 .main-links a:hover {
@@ -63,7 +65,7 @@
     padding: 10px 20px;
   }
 
-  .main-links a:first-child {
-    margin-bottom: 10px;
+  .main-links a:last-child {
+    margin-top: 10px;
   }
 }
