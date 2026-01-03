@@ -3,11 +3,11 @@
 ## A project showcasing three distinct implementations of a Todo List application with advanced features (editing, sorting, and theme/language switching).
 
 ❤️</br>
-### Vanilla JS & Accessibility (a11y) </br>
+Vanilla JS & Accessibility (a11y) </br>
 https://id753.github.io/todo-project/js/ </br>
-### React & TypeScript</br>
+React & TypeScript</br>
 https://todo-project-zeta-ten.vercel.app/</br>
-### Redux Toolkit & Tailwind CSS</br>
+Redux Toolkit & Tailwind CSS</br>
 https://todo-project-redux.vercel.app/</br>
 
 
