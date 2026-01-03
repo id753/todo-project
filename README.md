@@ -1,3 +1,5 @@
+# Todo App | Multiple Implementations
+
 ## A project showcasing three distinct implementations of a Todo List application with advanced features (editing, sorting, and theme/language switching).
 
 ❤️</br>
