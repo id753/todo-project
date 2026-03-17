@@ -12,6 +12,7 @@ import {
 } from '../services/api';
 import s from '../TodoList/TodoList.module.css';
 import { Todo, TodoCreateInput } from '../types';
+import { toast } from '../utils/toast';
 
 type FilterStatus = 'all' | 'complete' | 'incomplete' | 'favorite';
 
@@ -41,6 +42,7 @@ const TodoList = () => {
       } catch (error: unknown) {
         // setTodos(todosData.todos as Todo[]);
         console.error(error);
+        toast.error(t('networkError'));
       }
     };
     loadTodos();
@@ -96,8 +98,11 @@ const TodoList = () => {
     setTodos(prev => prev.filter(item => item.id !== id));
     try {
       await deleteTodoApi(id);
+      toast.success(t('deleteSuccess'));
     } catch (error: unknown) {
       console.error(error);
+      toast.error(t('deleteError'));
+
       //  Если произошла ошибка — возвращаем заметку на место
       if (todoToRestore) {
         setTodos(prev => [...prev, todoToRestore]);
@@ -117,8 +122,10 @@ const TodoList = () => {
       const saveTodo: Todo = await createTodo(newTodo);
       setTodos(prev => [...prev, saveTodo]);
       setNewValue('');
+      toast.success(t('addSuccess'));
     } catch (error: unknown) {
       console.error(error);
+      toast.error(t('addError'));
     }
   };
 
@@ -133,8 +140,10 @@ const TodoList = () => {
     );
     try {
       await favoriteTodoApi(id, newFavoriteStatus);
+      toast.success(t('favoriteSuccess'));
     } catch (error: unknown) {
       console.log(error);
+      toast.error(t('favoriteError'));
       setTodos(prev =>
         prev.map(todo =>
           todo.id === id ? { ...todo, isFavorite: !newFavoriteStatus } : todo
@@ -154,8 +163,11 @@ const TodoList = () => {
     );
     try {
       await completedTodoApi(id, newCompletedStatus);
+      toast.success(t('completeSuccess'));
     } catch (error: unknown) {
       console.log(error);
+      toast.error(t('completeError'));
+
       setTodos(prev =>
         prev.map(todo =>
           todo.id === id ? { ...todo, isFavorite: !newCompletedStatus } : todo
@@ -178,9 +190,10 @@ const TodoList = () => {
     );
     try {
       await editTodoApi(id, newTitle.trim());
+      toast.success(t('editSuccess'));
     } catch (error: unknown) {
       console.log(error);
-
+      toast.error(t('editError'));
       setTodos(prev =>
         prev.map(todo =>
           todo.id === id ? { ...todo, title: oldTodo.title } : todo
