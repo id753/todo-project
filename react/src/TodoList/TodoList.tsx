@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import TodoItem from './TodoItem';
-import todosData from './../assets/db.json';
+// import todosData from './../assets/db.json';
 import {
   createTodo,
   fetchData,
@@ -11,7 +11,7 @@ import {
   editTodoApi,
 } from '../services/api';
 import s from '../TodoList/TodoList.module.css';
-import { Todo } from '../types';
+import { Todo, TodoCreateInput } from '../types';
 
 type FilterStatus = 'all' | 'complete' | 'incomplete' | 'favorite';
 
@@ -21,7 +21,7 @@ const TodoList = () => {
   const FILTER_STATUS_KEY = 'filterStatus';
   const SEARCH_QUERY_KEY = 'SearchQuery';
 
-  const [todos, setTodos] = useState<Todo[]>(todosData.todos || []);
+  const [todos, setTodos] = useState<Todo[]>([]);
   const [newValue, setNewValue] = useState<string>('');
   const [searchQuery, setSearchQuery] = useState<string>(
     localStorage.getItem(SEARCH_QUERY_KEY) || ''
@@ -39,7 +39,7 @@ const TodoList = () => {
           return;
         }
       } catch (error: unknown) {
-        setTodos(todosData.todos as Todo[]);
+        // setTodos(todosData.todos as Todo[]);
         console.error(error);
       }
     };
@@ -59,7 +59,9 @@ const TodoList = () => {
     e.preventDefault();
   };
   const filteredTodos = todos.filter(item => {
-    const searchValue: boolean = item.title
+    if (!item) return false;
+
+    const searchValue: boolean = (item.title || '')
       .toLowerCase()
       .includes(searchQuery.toLowerCase());
 
@@ -89,27 +91,32 @@ const TodoList = () => {
   });
 
   const deleteTodo = async (id: string): Promise<void> => {
+    const todoToRestore = todos.find(item => item.id === id);
+
     setTodos(prev => prev.filter(item => item.id !== id));
     try {
       await deleteTodoApi(id);
     } catch (error: unknown) {
       console.error(error);
+      //  Если произошла ошибка — возвращаем заметку на место
+      if (todoToRestore) {
+        setTodos(prev => [...prev, todoToRestore]);
+      }
     }
   };
 
   const addNewTodo = async () => {
     if (!newValue.trim()) return;
 
-    const newTodo: Todo = {
-      id: crypto.randomUUID(),
+    const newTodo: TodoCreateInput = {
       title: newValue,
       completed: false,
       isFavorite: false,
     };
-    setTodos(prev => [...prev, newTodo]);
-    setNewValue('');
     try {
       const saveTodo: Todo = await createTodo(newTodo);
+      setTodos(prev => [...prev, saveTodo]);
+      setNewValue('');
     } catch (error: unknown) {
       console.error(error);
     }
@@ -128,8 +135,14 @@ const TodoList = () => {
       await favoriteTodoApi(id, newFavoriteStatus);
     } catch (error: unknown) {
       console.log(error);
+      setTodos(prev =>
+        prev.map(todo =>
+          todo.id === id ? { ...todo, isFavorite: !newFavoriteStatus } : todo
+        )
+      );
     }
   };
+
   const toggleComplete = async (id: string) => {
     const todoUpdate = todos.find(todo => todo.id === id);
     if (!todoUpdate) return;
@@ -143,11 +156,21 @@ const TodoList = () => {
       await completedTodoApi(id, newCompletedStatus);
     } catch (error: unknown) {
       console.log(error);
+      setTodos(prev =>
+        prev.map(todo =>
+          todo.id === id ? { ...todo, isFavorite: !newCompletedStatus } : todo
+        )
+      );
     }
   };
 
   const editTodo = async (id: string, newTitle: string) => {
     if (!newTitle.trim()) return;
+
+    // Сохраняем старое состояние для отката
+    const oldTodo = todos.find(todo => todo.id === id);
+    if (!oldTodo || oldTodo.title === newTitle) return;
+
     setTodos(prev =>
       prev.map(todo =>
         todo.id === id ? { ...todo, title: newTitle.trim() } : todo
@@ -157,6 +180,12 @@ const TodoList = () => {
       await editTodoApi(id, newTitle.trim());
     } catch (error: unknown) {
       console.log(error);
+
+      setTodos(prev =>
+        prev.map(todo =>
+          todo.id === id ? { ...todo, title: oldTodo.title } : todo
+        )
+      );
     }
   };
   return (
@@ -220,8 +249,9 @@ const TodoList = () => {
         <ul className={s.list}>
           {filteredTodos.map(item => (
             <TodoItem
-              key={item.id}
+              key={item.id || (item as any)._id}
               {...item}
+              id={item.id || (item as any)._id}
               onDeleteTodo={deleteTodo}
               onToggleFavorite={toggleFavorite}
               onToggleComplete={toggleComplete}

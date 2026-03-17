@@ -11,3 +11,23 @@ export interface AppContextType {
   lang: 'en' | 'uk';
   toggleLang: () => void;
 }
+
+export interface BackendResponse {
+  status: number;
+  message: string;
+  data: {
+    todos: Todo[];
+    page: number;
+    perPage: number;
+    totalItems: number;
+    totalPages: number;
+  };
+}
+
+export interface CreateResponse {
+  status: number;
+  message: string;
+  data: Todo;
+}
+
+export type TodoCreateInput = Omit<Todo, 'id'>;
