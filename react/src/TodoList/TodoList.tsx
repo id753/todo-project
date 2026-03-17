@@ -1,7 +1,6 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import TodoItem from './TodoItem';
-// import todosData from './../assets/db.json';
 import {
   createTodo,
   fetchData,
@@ -14,16 +13,23 @@ import s from '../TodoList/TodoList.module.css';
 import { Todo, TodoCreateInput } from '../types';
 import { toast } from '../utils/toast';
 
+/**
+ * Типизация возможных статусов фильтрации
+ */
 type FilterStatus = 'all' | 'complete' | 'incomplete' | 'favorite';
 
 const TodoList = () => {
   const { t } = useTranslation();
 
+  // Константы для ключей localStorage, чтобы избежать опечаток
   const FILTER_STATUS_KEY = 'filterStatus';
   const SEARCH_QUERY_KEY = 'SearchQuery';
 
+  // --- STATE ---
   const [todos, setTodos] = useState<Todo[]>([]);
   const [newValue, setNewValue] = useState<string>('');
+
+  // Инициализация состояний значениями из localStorage
   const [searchQuery, setSearchQuery] = useState<string>(
     localStorage.getItem(SEARCH_QUERY_KEY) || ''
   );
@@ -31,85 +37,95 @@ const TodoList = () => {
     (localStorage.getItem(FILTER_STATUS_KEY) as FilterStatus) || 'all'
   );
 
+  // --- EFFECTS ---
+
+  /** Загрузка данных при первом рендере */
   useEffect(() => {
     const loadTodos = async (): Promise<void> => {
       try {
         const serverTodos: Todo[] = await fetchData();
         if (serverTodos && serverTodos.length > 0) {
           setTodos(serverTodos);
-          return;
         }
       } catch (error: unknown) {
-        // setTodos(todosData.todos as Todo[]);
-        console.error(error);
+        console.error('Fetch error:', error);
         toast.error(t('networkError'));
       }
     };
     loadTodos();
-  }, []);
+  }, [t]);
 
+  /** Синхронизация фильтров с localStorage при их изменении */
   useEffect(() => {
     localStorage.setItem(SEARCH_QUERY_KEY, searchQuery);
     localStorage.setItem(FILTER_STATUS_KEY, filterStatus);
   }, [searchQuery, filterStatus]);
 
+  // --- HANDLERS ---
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     addNewTodo();
   };
+
   const handleSearchSubmit = (e: FormEvent<HTMLFormElement>): void => {
-    e.preventDefault();
+    e.preventDefault(); // Предотвращаем перезагрузку при поиске
   };
+
+  /** * Вычисляемое значение: фильтрация и поиск.
+   * Выполняется при каждом рендере на основе текущих todos и фильтров.
+   */
   const filteredTodos = todos.filter(item => {
     if (!item) return false;
 
-    const searchValue: boolean = (item.title || '')
+    // Поиск по названию (регистронезависимый)
+    const matchesSearch: boolean = (item.title || '')
       .toLowerCase()
       .includes(searchQuery.toLowerCase());
 
-    //   const matchesStatus =
-    //     filterStatus === 'all' ||
-    //     (filterStatus === 'complete' && item.completed) ||
-    //     (filterStatus === 'incomplete' && !item.completed) ||
-    //     (filterStatus === 'favorite' && item.isFavorite);
-
-    let searchStatus: boolean = true;
+    // Фильтрация по статусу
+    let matchesStatus: boolean = true;
     switch (filterStatus) {
       case 'complete':
-        searchStatus = item.completed === true;
+        matchesStatus = item.completed === true;
         break;
       case 'incomplete':
-        searchStatus = item.completed === false;
+        matchesStatus = item.completed === false;
         break;
       case 'favorite':
-        searchStatus = item.isFavorite === true;
+        matchesStatus = item.isFavorite === true;
         break;
       case 'all':
       default:
-        searchStatus = true;
+        matchesStatus = true;
         break;
     }
-    return searchValue && searchStatus;
+    return matchesSearch && matchesStatus;
   });
 
+  // --- API ACTIONS (с применением Optimistic UI) ---
+
+  /** Удаление заметки */
   const deleteTodo = async (id: string): Promise<void> => {
     const todoToRestore = todos.find(item => item.id === id);
 
+    // 1. Оптимистичное удаление из UI
     setTodos(prev => prev.filter(item => item.id !== id));
+
     try {
       await deleteTodoApi(id);
       toast.success(t('deleteSuccess'));
     } catch (error: unknown) {
       console.error(error);
       toast.error(t('deleteError'));
-
-      //  Если произошла ошибка — возвращаем заметку на место
+      // 2. Откат: возвращаем заметку, если сервер ответил ошибкой
       if (todoToRestore) {
         setTodos(prev => [...prev, todoToRestore]);
       }
     }
   };
 
+  /** Добавление новой заметки */
   const addNewTodo = async () => {
     if (!newValue.trim()) return;
 
@@ -118,6 +134,7 @@ const TodoList = () => {
       completed: false,
       isFavorite: false,
     };
+
     try {
       const saveTodo: Todo = await createTodo(newTodo);
       setTodos(prev => [...prev, saveTodo]);
@@ -129,21 +146,27 @@ const TodoList = () => {
     }
   };
 
+  /** Переключение статуса "Избранное" */
   const toggleFavorite = async (id: string) => {
     const todoUpdate = todos.find(todo => todo.id === id);
     if (!todoUpdate) return;
+
     const newFavoriteStatus = !todoUpdate.isFavorite;
+
+    // Оптимистичное обновление
     setTodos(prev =>
       prev.map(todo =>
         todo.id === id ? { ...todo, isFavorite: newFavoriteStatus } : todo
       )
     );
+
     try {
       await favoriteTodoApi(id, newFavoriteStatus);
       toast.success(t('favoriteSuccess'));
     } catch (error: unknown) {
-      console.log(error);
+      console.error(error);
       toast.error(t('favoriteError'));
+      // Откат к предыдущему значению
       setTodos(prev =>
         prev.map(todo =>
           todo.id === id ? { ...todo, isFavorite: !newFavoriteStatus } : todo
@@ -152,48 +175,55 @@ const TodoList = () => {
     }
   };
 
+  /** Переключение статуса выполнения */
   const toggleComplete = async (id: string) => {
     const todoUpdate = todos.find(todo => todo.id === id);
     if (!todoUpdate) return;
+
     const newCompletedStatus = !todoUpdate.completed;
+
     setTodos(prev =>
       prev.map(todo =>
         todo.id === id ? { ...todo, completed: newCompletedStatus } : todo
       )
     );
+
     try {
       await completedTodoApi(id, newCompletedStatus);
       toast.success(t('completeSuccess'));
     } catch (error: unknown) {
-      console.log(error);
+      console.error(error);
       toast.error(t('completeError'));
 
       setTodos(prev =>
         prev.map(todo =>
-          todo.id === id ? { ...todo, isFavorite: !newCompletedStatus } : todo
+          todo.id === id ? { ...todo, completed: !newCompletedStatus } : todo
         )
       );
     }
   };
 
+  /** Редактирование текста заметки */
   const editTodo = async (id: string, newTitle: string) => {
-    if (!newTitle.trim()) return;
+    const trimmedTitle = newTitle.trim();
+    if (!trimmedTitle) return;
 
-    // Сохраняем старое состояние для отката
     const oldTodo = todos.find(todo => todo.id === id);
-    if (!oldTodo || oldTodo.title === newTitle) return;
+    if (!oldTodo || oldTodo.title === trimmedTitle) return;
 
     setTodos(prev =>
       prev.map(todo =>
-        todo.id === id ? { ...todo, title: newTitle.trim() } : todo
+        todo.id === id ? { ...todo, title: trimmedTitle } : todo
       )
     );
+
     try {
-      await editTodoApi(id, newTitle.trim());
+      await editTodoApi(id, trimmedTitle);
       toast.success(t('editSuccess'));
     } catch (error: unknown) {
-      console.log(error);
+      console.error(error);
       toast.error(t('editError'));
+      // Откат к старому заголовку
       setTodos(prev =>
         prev.map(todo =>
           todo.id === id ? { ...todo, title: oldTodo.title } : todo
@@ -201,8 +231,10 @@ const TodoList = () => {
       );
     }
   };
+
   return (
     <div className={s.wrapper}>
+      {/* Форма добавления */}
       <form onSubmit={handleSubmit} className={s.todoForm}>
         <input
           onChange={e => setNewValue(e.target.value)}
@@ -217,9 +249,9 @@ const TodoList = () => {
         </button>
       </form>
 
+      {/* Панель поиска и фильтрации */}
       <form onSubmit={handleSearchSubmit} className={s.todoForm}>
         <input
-          // 3 filter
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
             setSearchQuery(e.target.value)
           }
@@ -229,12 +261,10 @@ const TodoList = () => {
           className={s.input_form}
         />
         <select
-          // 3 filter
           onChange={(e: ChangeEvent<HTMLSelectElement>) =>
             setFilterStatus(e.target.value as FilterStatus)
           }
           value={filterStatus}
-          // type="text"
           name="select"
           className={s.select}
         >
@@ -244,7 +274,8 @@ const TodoList = () => {
           <option value="favorite">{t('optionFavorite')}</option>
         </select>
       </form>
-      {/* Если filteredTodos пуст */}
+
+      {/* Заглушка при отсутствии заметок */}
       {filteredTodos.length === 0 && (
         <li className={s.list_item_empty}>
           <div className={s.image_container}>
@@ -258,13 +289,14 @@ const TodoList = () => {
           </div>
         </li>
       )}
+
+      {/* Список заметок */}
       {filteredTodos.length > 0 && (
         <ul className={s.list}>
           {filteredTodos.map(item => (
             <TodoItem
-              key={item.id || (item as any)._id}
+              key={item.id}
               {...item}
-              id={item.id || (item as any)._id}
               onDeleteTodo={deleteTodo}
               onToggleFavorite={toggleFavorite}
               onToggleComplete={toggleComplete}
