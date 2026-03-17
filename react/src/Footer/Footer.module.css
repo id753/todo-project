@@ -5,6 +5,7 @@ footer {
   color: var(--color-placeholder);
   font-size: 14px;
   text-align: center;
+  margin-top: auto;
 }
 
 .footer_text a {
