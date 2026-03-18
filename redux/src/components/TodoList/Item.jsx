@@ -43,7 +43,7 @@ const Item = ({ id, title, completed, isFavorite }) => {
   const handleBlur = () => {
     handleEditSave();
   };
-
+  console.log('Current status:', title, completed);
   return (
     <div className="w-full">
       <li className="mb-[10px] flex min-h-[80px] items-center justify-between rounded-[8px] border-1 border-solid border-(--color-border) bg-(--color-surface) px-[10px] py-[5px] transition duration-(--transition) hover:bg-(--color-hover)">

@@ -1,14 +1,15 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-axios.defaults.baseURL = 'http://localhost:3000';
+axios.defaults.baseURL =
+  import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 export const fetchData = createAsyncThunk(
   'todos/fetchAllTodos',
   async (_, thunkAPI) => {
     try {
       const response = await axios.get('/todos');
-      return response.data;
+      return response.data.data.todos;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
@@ -19,8 +20,8 @@ export const deleteTodoThunk = createAsyncThunk(
   'todos/deleteTodo',
   async (id, thunkAPI) => {
     try {
-      const response = await axios.delete(`/todos/${id}`);
-      return response.data;
+      await axios.delete(`/todos/${id}`);
+      return id;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
@@ -31,10 +32,11 @@ export const addTodoThunk = createAsyncThunk(
   'todos/addTodo',
   async (body, thunkAPI) => {
     try {
-      const response = await axios.post('todos', body);
-      return response.data;
+      const response = await axios.post('/todos', body);
+      const updatedTodo = response.data.data || response.data;
+      return updatedTodo;
     } catch (error) {
-      return thunkAPI.thunkAPI.rejectWithValue(error.message);
+      return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
@@ -43,21 +45,26 @@ export const editTodoThunk = createAsyncThunk(
   'todos/editTodo',
   async (body, thunkAPI) => {
     try {
-      const response = await axios.put(`/todos/${body.id}`, body);
-      return response.data;
+      const { id, ...data } = body;
+      const response = await axios.patch(`/todos/${id}`, data);
+      const updatedTodo = response.data.data || response.data;
+      return updatedTodo;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message || error.message
+      );
     }
   }
 );
-
 export const toggleCompleteThunk = createAsyncThunk(
   'todos/toggleComplete',
-  async (body, thunkAPI) => {
+  async (todo, thunkAPI) => {
     try {
-      //   console.log('body:', body);
-      await axios.put(`todos/${body.id}`, body);
-      thunkAPI.dispatch(fetchData());
+      const response = await axios.patch(`/todos/${todo.id}`, {
+        completed: todo.completed,
+      });
+      const updatedTodo = response.data.data || response.data;
+      return updatedTodo;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
@@ -66,12 +73,17 @@ export const toggleCompleteThunk = createAsyncThunk(
 
 export const toggleFavoriteThunk = createAsyncThunk(
   'todos/toggleFavorite',
-  async (body, thunkAPI) => {
+  async (todo, thunkAPI) => {
     try {
-      await axios.put(`todos/${body.id}`, body);
-      thunkAPI.dispatch(fetchData());
+      const response = await axios.patch(`/todos/${todo.id}`, {
+        isFavorite: todo.isFavorite,
+      });
+      const updatedTodo = response.data.data || response.data;
+      return updatedTodo;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message || error.message
+      );
     }
   }
 );

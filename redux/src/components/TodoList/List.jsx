@@ -13,12 +13,15 @@ import {
 const List = () => {
   const { t } = useTranslation();
 
-  const todos = useSelector(selectTodos);
+  const todos = useSelector(selectTodos) || [];
   const filter = useSelector(selectFilter);
   const filterByStatus = useSelector(selectFilterByStatus);
 
-  const filteredData = todos.filter(item =>
-    item.title.toLowerCase().includes(filter.toLowerCase())
+  const filteredData = todos.filter(
+    item =>
+      item &&
+      item.title &&
+      item.title.toLowerCase().includes(filter.toLowerCase())
   );
 
   const getSortedData = () => {
@@ -33,10 +36,11 @@ const List = () => {
         return filteredData;
     }
   };
+  const sortedData = getSortedData();
   return (
     <div className="w-full">
       <ul className="mx-auto mt-0 w-full max-w-[600px] list-none p-0 !pb-[20px]">
-        {getSortedData().length === 0 && (
+        {sortedData.length === 0 && (
           <li className="flex justify-center">
             <div>
               <img
@@ -51,8 +55,8 @@ const List = () => {
           </li>
         )}
 
-        {getSortedData().length > 0 &&
-          getSortedData().map(item => <Item {...item} key={item.id} />)}
+        {sortedData.length > 0 &&
+          sortedData.map(item => <Item {...item} key={item.id} />)}
       </ul>
     </div>
   );

@@ -5,6 +5,8 @@ import {
   deleteTodoThunk,
   editTodoThunk,
   fetchData,
+  toggleCompleteThunk,
+  toggleFavoriteThunk,
 } from './operations';
 
 const initialState = {
@@ -20,7 +22,7 @@ const initialState = {
   filterByStatus: 'all',
 
   isLoading: false,
-  isError: false,
+  isError: null,
 };
 
 const slice = createSlice({
@@ -33,26 +35,29 @@ const slice = createSlice({
     // deleteTodo: (state, action) => {
     //   state.todos = state.todos.filter(item => item.id !== action.payload);
     // },
-    toggleComplete: (state, action) => {
-      const item = state.todos.find(item => {
-        return item.id === action.payload;
-      });
-      item.completed = !item.completed;
-    },
-    toggleFavorite: (state, action) => {
-      const item = state.todos.find(item => {
-        // console.log(action.payload.id);
 
-        return item.id === action.payload;
-      });
-      item.isFavorite = !item.isFavorite;
-    },
+    // toggleComplete: (state, action) => {
+    //   const item = state.todos.find(item => {
+    //     return item.id === action.payload;
+    //   });
+    //   item.completed = !item.completed;
+    // },
+    // toggleFavorite: (state, action) => {
+    //   const item = state.todos.find(item => {
+    //      console.log(action.payload.id);
+
+    //     return item.id === action.payload;
+    //   });
+    //   item.isFavorite = !item.isFavorite;
+    // },
     editTodo: (state, action) => {
       const item = state.todos.find(item => {
         // console.log(action.payload);
         return item.id === action.payload.id;
       });
-      item.title = action.payload.title;
+      if (item) {
+        item.title = action.payload.title;
+      }
     },
     changeFilter: (state, action) => {
       state.filter = action.payload;
@@ -64,11 +69,15 @@ const slice = createSlice({
       state.isLoading = action.payload;
     },
     setError: (state, action) => {
-      state.isLoading = action.payload;
+      state.isError = action.payload;
     },
   },
   extraReducers: builder => {
     builder
+      .addCase(fetchData.pending, state => {
+        state.isLoading = true;
+        state.isError = null;
+      })
       .addCase(fetchData.fulfilled, (state, action) => {
         state.todos = action.payload;
         state.isLoading = false;
@@ -77,22 +86,42 @@ const slice = createSlice({
         state.isError = action.payload;
         state.isLoading = false;
       })
-      .addCase(fetchData.pending, (state, action) => {
-        state.isLoading = true;
-        state.isError = false;
-      })
 
       .addCase(deleteTodoThunk.fulfilled, (state, action) => {
-        state.todos = state.todos.filter(item => item.id !== action.payload.id);
+        state.todos = state.todos.filter(item => item.id !== action.payload);
       })
       .addCase(addTodoThunk.fulfilled, (state, action) => {
         state.todos.push(action.payload);
       })
       .addCase(editTodoThunk.fulfilled, (state, action) => {
-        const item = state.todos.find(item => {
-          return item.id === action.payload.id;
-        });
-        item.title = action.payload.title;
+        const index = state.todos.findIndex(
+          item => item.id === action.payload.id
+        );
+        if (index !== -1) {
+          state.todos[index] = action.payload;
+        }
+      })
+      .addCase(toggleCompleteThunk.fulfilled, (state, action) => {
+        const index = state.todos.findIndex(
+          item => item.id === action.payload.id
+        );
+        if (index !== -1) {
+          state.todos[index] = action.payload;
+        }
+      })
+      .addCase(toggleFavoriteThunk.fulfilled, (state, action) => {
+        const index = state.todos.findIndex(
+          item => item.id === action.payload.id
+        );
+        if (index !== -1) {
+          state.todos[index] = action.payload;
+        }
+      })
+      .addCase(toggleCompleteThunk.rejected, (state, action) => {
+        state.isError = action.payload;
+      })
+      .addCase(toggleFavoriteThunk.rejected, (state, action) => {
+        state.isError = action.payload;
       });
   },
 });
@@ -111,7 +140,7 @@ export const {
   setError,
 } = slice.actions;
 
-export const selectTodos = state => state.todos.todos;
+export const selectTodos = state => state.todos.todos || [];
 export const selectFilter = state => state.todos.filter;
 export const selectFilterByStatus = state => state.todos.filterByStatus;
 
