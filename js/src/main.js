@@ -88,7 +88,7 @@ function fetchData(endpoint = '', options = {}) {
 // Данные при старте
 fetchData('/todos')
   .then(data => {
-    todos = data.todos || data;
+    todos = data.data.todos || data;
     handleFilter();
   })
   .catch(error => {
