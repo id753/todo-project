@@ -1,7 +1,7 @@
 // =====================
 // Константы и данные
 // =====================
-const BASE_URL = 'http://localhost:3000/todos';
+const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 import { dictionary } from './dictionary.js';
 
 const THEME_KEY = 'theme';
@@ -71,22 +71,26 @@ if (savedTheme === 'dark') {
 // =====================
 // Работа с сервером
 // =====================
-function fetchData(url = BASE_URL, options = {}) {
-  return fetch(url, options).then(response => {
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
-    return response.json();
-  });
+function fetchData(endpoint = '', options = {}) {
+  const url = endpoint.startsWith('http') ? endpoint : `${BASE_URL}${endpoint}`;
+
+  return fetch(url, options)
+    .then(response => {
+      if (!response.ok) throw new Error(response.statusText);
+      return response.json();
+    })
+    .then(result => {
+      return result.data || result;
+    });
 }
 
 // данные при старте
-fetchData(BASE_URL)
+fetchData('/todos')
   .then(data => {
-    todos = data;
+    todos = data.todos || data;
     handleFilter();
   })
-  .catch(error => console.log(error));
+  .catch(console.error);
 
 // =====================
 // Разметка задач
@@ -176,7 +180,7 @@ function handleSubmit(e) {
   }
   todo.style.border = '';
 
-  fetchData(BASE_URL, {
+  fetchData('/todos', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -203,7 +207,7 @@ function handleUpdate(e) {
   const parent = e.target.closest('.list-item');
   const id = parent.dataset.id;
 
-  fetchData(`${BASE_URL}/${id}`, {
+  fetchData(`${BASE_URL}/todos/${id}`, {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ completed: e.target.checked }),
@@ -226,7 +230,7 @@ function handleDelete(e) {
   const parent = e.target.closest('.list-item');
   const id = parent.dataset.id;
 
-  fetchData(`${BASE_URL}/${id}`, { method: 'DELETE' })
+  fetchData(`${BASE_URL}/todos/${id}`, { method: 'DELETE' })
     .then(() => {
       parent.remove();
       todos = todos.filter(todo => todo.id !== id);
@@ -273,7 +277,7 @@ function handleEdit(e) {
       return;
     }
 
-    fetchData(`${BASE_URL}/${id}`, {
+    fetchData(`${BASE_URL}/todos/${id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ title: newTitle }),
@@ -321,7 +325,7 @@ function handleToggleFavorite(e) {
   const currentStatus = favoriteButton.dataset.favorite === 'true';
   const newStatus = !currentStatus;
 
-  fetchData(`${BASE_URL}/${id}`, {
+  fetchData(`${BASE_URL}/todos/${id}`, {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ isFavorite: newStatus }),
