@@ -1,5 +1,7 @@
 import React from 'react';
 import { createSlice } from '@reduxjs/toolkit';
+import { toast } from '../utils/toast';
+import i18next from 'i18next';
 import {
   addTodoThunk,
   deleteTodoThunk,
@@ -35,7 +37,6 @@ const slice = createSlice({
     // deleteTodo: (state, action) => {
     //   state.todos = state.todos.filter(item => item.id !== action.payload);
     // },
-
     // toggleComplete: (state, action) => {
     //   const item = state.todos.find(item => {
     //     return item.id === action.payload;
@@ -89,9 +90,11 @@ const slice = createSlice({
 
       .addCase(deleteTodoThunk.fulfilled, (state, action) => {
         state.todos = state.todos.filter(item => item.id !== action.payload);
+        toast.success(i18next.t('deleteSuccess'));
       })
       .addCase(addTodoThunk.fulfilled, (state, action) => {
         state.todos.push(action.payload);
+        toast.success(i18next.t('addSuccess'));
       })
       .addCase(editTodoThunk.fulfilled, (state, action) => {
         const index = state.todos.findIndex(
@@ -100,6 +103,7 @@ const slice = createSlice({
         if (index !== -1) {
           state.todos[index] = action.payload;
         }
+        toast.success(i18next.t('editSuccess'));
       })
       .addCase(toggleCompleteThunk.fulfilled, (state, action) => {
         const index = state.todos.findIndex(
@@ -108,6 +112,7 @@ const slice = createSlice({
         if (index !== -1) {
           state.todos[index] = action.payload;
         }
+        toast.success(i18next.t('completeSuccess'));
       })
       .addCase(toggleFavoriteThunk.fulfilled, (state, action) => {
         const index = state.todos.findIndex(
@@ -116,13 +121,37 @@ const slice = createSlice({
         if (index !== -1) {
           state.todos[index] = action.payload;
         }
+        toast.success(i18next.t('favoriteSuccess'));
       })
-      .addCase(toggleCompleteThunk.rejected, (state, action) => {
-        state.isError = action.payload;
-      })
-      .addCase(toggleFavoriteThunk.rejected, (state, action) => {
-        state.isError = action.payload;
-      });
+      //  Универсальные матчеры для ВСЕХ Thunks
+      .addMatcher(
+        action => action.type.endsWith('/pending'),
+        state => {
+          state.isLoading = true;
+          state.isError = null;
+        }
+      )
+      .addMatcher(
+        action => action.type.endsWith('/fulfilled'),
+        state => {
+          state.isLoading = false;
+        }
+      )
+      .addMatcher(
+        action => action.type.endsWith('/rejected'),
+        (state, action) => {
+          state.isLoading = false;
+          state.isError = action.payload;
+          toast.error(i18next.t('networkError'));
+        }
+      );
+    // .addCase(toggleCompleteThunk.rejected, (state, action) => {
+    //   state.isError = action.payload;
+    // })
+    // .addCase(toggleFavoriteThunk.rejected, (state, action) => {
+    //   state.isError = action.payload;
+    //   toast.error(i18next.t('favoriteError'));
+    // });
   },
 });
 

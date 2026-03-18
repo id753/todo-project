@@ -7,6 +7,7 @@ import { persistor, store } from './redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import i18n from './dictionary/i18n.jsx';
 import { I18nextProvider } from 'react-i18next';
+import 'izitoast/dist/css/iziToast.min.css';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
