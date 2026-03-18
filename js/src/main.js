@@ -75,14 +75,13 @@ if (savedTheme === 'dark') {
 function fetchData(endpoint = '', options = {}) {
   const url = endpoint.startsWith('http') ? endpoint : `${BASE_URL}${endpoint}`;
 
-  return fetch(url, options)
-    .then(response => {
-      if (!response.ok) throw new Error(response.statusText);
-      return response.json();
-    })
-    .then(result => {
-      return result.data || result;
-    });
+  return fetch(url, options).then(response => {
+    if (!response.ok) throw new Error(response.statusText);
+    return response.json();
+  });
+  // .then(result => {
+  //   return result.data || result;
+  // });
 }
 
 // Данные при старте
