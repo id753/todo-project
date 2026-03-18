@@ -1,5 +1,5 @@
-import iziToast, { IziToastSettings } from 'izitoast';
-import 'izitoast/dist/css/iziToast.min.css';
+// import iziToast, { IziToastSettings } from 'izitoast';
+// import 'izitoast/dist/css/iziToast.min.css';
 
 const defaultOptions = {
   position: 'topLeft',
