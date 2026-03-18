@@ -88,7 +88,11 @@ function fetchData(endpoint = '', options = {}) {
 // Данные при старте
 fetchData('/todos')
   .then(data => {
-    todos = data.data.todos || data;
+    todos = Array.isArray(data.todos)
+      ? data.todos
+      : Array.isArray(data)
+        ? data
+        : [];
     handleFilter();
   })
   .catch(error => {
