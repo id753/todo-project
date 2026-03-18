@@ -75,13 +75,14 @@ if (savedTheme === 'dark') {
 function fetchData(endpoint = '', options = {}) {
   const url = endpoint.startsWith('http') ? endpoint : `${BASE_URL}${endpoint}`;
 
-  return fetch(url, options).then(response => {
-    if (!response.ok) throw new Error(response.statusText);
-    return response.json();
-  });
-  // .then(result => {
-  //   return result.data || result;
-  // });
+  return fetch(url, options)
+    .then(response => {
+      if (!response.ok) throw new Error(response.statusText);
+      return response.json();
+    })
+    .then(result => {
+      return result.data || result;
+    });
 }
 
 // Данные при старте
@@ -196,8 +197,11 @@ function handleSubmit(e) {
       isFavorite: false,
     }),
   })
-    .then(data => {
-      todos.push(data);
+    .then(result => {
+      const newTodo = result.data || result;
+      if (!Array.isArray(todos)) todos = [];
+
+      todos.push(newTodo);
       handleFilter();
       toast.success(t.addSuccess);
     })
