@@ -1,7 +1,7 @@
 import iziToast, { IziToastSettings } from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
-const defaultOptions: IziToastSettings = {
+const defaultOptions = {
   position: 'topLeft',
   timeout: 2000,
   transitionIn: 'flipInX',
@@ -9,7 +9,7 @@ const defaultOptions: IziToastSettings = {
 };
 
 export const toast = {
-  success: (message: string) => {
+  success: message => {
     iziToast.success({
       ...defaultOptions,
       title: 'OK',
@@ -17,7 +17,7 @@ export const toast = {
       backgroundColor: 'var(--color-success)',
     });
   },
-  error: (message: string) => {
+  error: message => {
     iziToast.error({
       ...defaultOptions,
       title: 'Error',
