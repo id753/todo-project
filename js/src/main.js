@@ -1,7 +1,7 @@
 // =====================
 // Константы и данные
 // =====================
-const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+const BASE_URL = 'https://todo-project-api-x8pg.onrender.com';
 import { dictionary } from './dictionary.js';
 import { toast } from './utils/toast.js';
 
