@@ -26,6 +26,29 @@ export const dictionary = {
     markLabel: 'Позначити задачу',
     unmarkLabel: 'Зняти позначку з задачі',
     validationError: 'Поле не може бути пустим',
+
+    // iziToast
+    // Успішні дії
+    addSuccess: 'Справу успішно додано!',
+    deleteSuccess: 'Справу видалено',
+    editSuccess: 'Зміни збережено',
+    favoriteSuccess: 'Статус "Улюблене" оновлено',
+    completeSuccess: 'Статус виконання змінено',
+
+    // Помилки (Try/Catch)
+    loadError: 'Не вдалося завантажити дані з сервера',
+    addError: 'Помилка при додаванні. Спробуйте ще раз',
+    deleteError: 'Не вдалося видалити. Замітку відновлено',
+    editError: 'Помилка при редагуванні. Спробуйте пізніше',
+    favoriteError: 'Не вдалося змінити статус Улюблене',
+    completeError: 'Не вдалося змінити статус',
+
+    // Валідація
+    // validationShort: 'Назва має містити не менше 3 символів',
+    // validationEmpty: 'Поле не може бути порожнім',
+
+    // Мережа
+    networkError: "Відсутнє з'єднання з сервером",
   },
   en: {
     title: 'TODO LIST',
@@ -55,5 +78,27 @@ export const dictionary = {
     markLabel: 'Mark todo',
     unmarkLabel: 'Unmark todo',
     validationError: 'The field cannot be empty',
+
+    // iziToast
+    // Success Actions
+    addSuccess: 'Todo added successfully!',
+    deleteSuccess: 'Todo deleted',
+    editSuccess: 'Changes saved',
+    favoriteSuccess: 'Favorite status updated',
+    completeSuccess: 'Completion status updated',
+
+    // Errors (Try/Catch)
+    loadError: 'Failed to load data from server',
+    addError: 'Error adding note. Please try again',
+    deleteError: 'Failed to delete. Note has been restored',
+    editError: 'Error editing note. Please try later',
+    favoriteError: 'Failed to update favorite status',
+
+    // Validation
+    validationShort: 'Title must be at least 3 characters long',
+    validationEmpty: 'Field cannot be empty',
+
+    // Network
+    networkError: 'Server connection lost',
   },
 };

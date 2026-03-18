@@ -3,6 +3,7 @@
 // =====================
 const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 import { dictionary } from './dictionary.js';
+import { toast } from './utils/toast.js';
 
 const THEME_KEY = 'theme';
 const LANG_KEY = 'lang';
@@ -84,13 +85,16 @@ function fetchData(endpoint = '', options = {}) {
     });
 }
 
-// данные при старте
+// Данные при старте
 fetchData('/todos')
   .then(data => {
     todos = data.todos || data;
     handleFilter();
   })
-  .catch(console.error);
+  .catch(error => {
+    toast.error(t.networkError);
+    console.log(error);
+  });
 
 // =====================
 // Разметка задач
@@ -192,8 +196,12 @@ function handleSubmit(e) {
     .then(data => {
       todos.push(data);
       handleFilter();
+      toast.success(t.addSuccess);
     })
-    .catch(error => console.log(error))
+    .catch(error => {
+      toast.error(t.addError);
+      console.log(error);
+    })
     .finally(() => e.target.reset());
 }
 
@@ -217,8 +225,12 @@ function handleUpdate(e) {
       const index = todos.findIndex(todo => todo.id === data.id);
       if (index !== -1) todos[index].completed = data.completed;
       handleFilter();
+      toast.success(t.completeSuccess);
     })
-    .catch(console.log);
+    .catch(error => {
+      toast.error(t.completeError);
+      console.log(error);
+    });
 }
 
 // =====================
@@ -240,8 +252,12 @@ function handleDelete(e) {
       if (todos.length > 0) {
         document.querySelector('.input-form').focus();
       }
+      toast.success(t.deleteSuccess);
     })
-    .catch(console.log);
+    .catch(error => {
+      toast.error(t.deleteError);
+      console.log(error);
+    });
 }
 
 // =====================
@@ -288,8 +304,12 @@ function handleEdit(e) {
         if (todoUpdate) todoUpdate.title = data.title;
 
         handleFilter();
+        toast.success(t.editSuccess);
       })
-      .catch(console.log)
+      .catch(error => {
+        toast.error(t.editError);
+        console.log(error);
+      })
       .finally(() => {
         inputEl.remove();
         titleEl.style.display = '';
@@ -356,8 +376,12 @@ function handleToggleFavorite(e) {
       if (newButton) {
         newButton.focus();
       }
+      toast.success(t.favoriteSuccess);
     })
-    .catch(console.log);
+    .catch(error => {
+      toast.error(t.favoriteError);
+      console.log(error);
+    });
 }
 
 // =====================
