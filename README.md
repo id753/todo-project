@@ -11,7 +11,7 @@
 #### [Redux Toolkit & Tailwind CSS](https://todo-project-redux.vercel.app)
 ## [Backend Code](https://github.com/id753/todo-project-api)
 
-##
+## Tech Stack
 ### 🎨 Frontend Tech Stack: React, TypeScript; State Management (Redux Toolkit: Thunk, Persist); Styling (Tailwind CSS, CSS Modules); Internationalization (i18next); Notifications (iziToast); Accessibility (a11y); Storage (localStorage); Build Tool (Vite)
 ### ⚙️ [Backend](https://github.com/id753/todo-project-api) Tech Stack: Node.js, Express.js, MongoDB, Mongoose; REST API; Validation (Joi, Celebrate); Logging (Pino); Error Handling; Pagination & Search; API Testing (Postman); Deployment (Render) 
 
