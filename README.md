@@ -15,5 +15,4 @@ https://todo-project-redux.vercel.app/</br>
 
 
 Self-designed the UI/UX and developed versions using Vanilla JS (with an emphasis on a11y), React + TypeScript, and Redux Toolkit + Tailwind CSS.
-
-Demonstrated a good understanding of state management, modern styling approaches, clean code practices, and accessibility principles.
+Focused on applying state management, styling best practices, and accessibility principles throughout the project.
