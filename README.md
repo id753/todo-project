@@ -14,34 +14,35 @@
 
 ## Features
 ### Frontend Experience
-Responsive UI: Fully adaptive interface optimized for mobile and desktop.</br>
-State Management: Efficient handling of application state (filters, lists, loading) using Redux Toolkit.</br>
-Persistent Preferences: Server-side synchronization of "Favorite" and "Completed" statuses for data persistence.</br>
-Accessibility (A11y): Semantic HTML and adherence to accessibility standards.</br>
-Real-time Feedback: Loading states and API error handling enhance UX.</br>
-Self-designed the UI/UX and developed versions using Vanilla JS (with an emphasis on a11y), React + TypeScript, and Redux Toolkit + Tailwind CSS.</br>
-Focused on applying state management, styling best practices, and accessibility principles throughout the project.</br>
+Responsive UI: Fully adaptive interface optimized for mobile and desktop.
+
+State Management: Efficient handling of application state (filters, lists, loading) using Redux Toolkit.
+
+Persistent Preferences: Server-side synchronization of "Favorite" and "Completed" statuses for data persistence.
+
+Accessibility (A11y): Semantic HTML and adherence to accessibility standards.
+
+Real-time Feedback: Loading states and API error handling enhance UX.
+
+Multiple Implementations: Self-designed UI/UX and developed versions using Vanilla JS (with a focus on a11y), React + TypeScript, and Redux Toolkit + Tailwind CSS.
+
+Best Practices: Applied state management, styling, and accessibility principles throughout the project.
 
 Getting Started (Frontend)
 Clone the repository
       
     git clone <your-repository-link>
-
 Install dependencies
 
      npm install
-
 Environment Variables
-Создайте файл .env в корневом каталоге (используйте .env.example как шаблон):
+Create a .env file in the root directory (use .env.example as a template):
 
-VITE_API_URL=http://localhost:3000
-
-
+    VITE_API_URL=http://localhost:3000
 Run the app
 
     npm run dev
-
-Откройте http://localhost:5173 в браузере.
+Open http://localhost:5173 in your browser.
 
 
 ## Additional information
