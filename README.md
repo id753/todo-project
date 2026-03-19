@@ -1,6 +1,9 @@
 # Todo App | Multiple Implementations
 
 ## A project showcasing three distinct implementations of a Todo List application with advanced features (editing, sorting, and theme/language switching).
+### 🎨 Frontend Tech Stack: React, TypeScript; State Management (Redux Toolkit: Thunk, Persist); Styling (Tailwind CSS, CSS Modules); Internationalization (i18next); Notifications (iziToast); Accessibility (a11y); Storage (localStorage); Build Tool (Vite)
+### ⚙️ [Backend](https://github.com/id753/todo-project-api) Tech Stack: Node.js, Express.js, MongoDB, Mongoose; REST API; Validation (Joi, Celebrate); Logging (Pino); Error Handling; Pagination & Search; API Testing (Postman); Deployment (Render) 
+
 
 ❤️</br>
 Vanilla JS & Accessibility (a11y) </br>
