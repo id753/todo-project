@@ -1,5 +1,7 @@
 # Todo App | Multiple Implementations
 ## A project showcasing three distinct implementations of a Todo List application with advanced features (editing, sorting, and theme/language switching).
+![Todo App Screenshot](./screenshots/todo-app.png)  
+*Screenshot of the Todo App interface*
 
 ## [Live Project](https://github.com/id753/todo-project-api)
 ## [Backend Code](https://github.com/id753/todo-project-api)
@@ -28,7 +30,7 @@ Multiple Implementations: Self-designed UI/UX and developed versions using Vanil
 
 Best Practices: Applied state management, styling, and accessibility principles throughout the project.
 
-Getting Started (Frontend)
+## Getting Started (Frontend)
 Clone the repository
       
     git clone <your-repository-link>
