@@ -20,9 +20,13 @@ https://todo-project-redux.vercel.app/</br>
 
 ### Frontend Experience
 Responsive UI: Fully adaptive interface optimized for mobile and desktop.
+
 State Management: Efficient handling of application state (filters, lists, loading) using Redux Toolkit.
+
 Persistent Preferences: Server-side synchronization of "Favorite" and "Completed" statuses for data persistence.
+
 Accessibility (A11y): Semantic HTML and adherence to accessibility standards.
+
 Real-time Feedback: Loading states and API error handling enhance UX.
 
 Self-designed the UI/UX and developed versions using Vanilla JS (with an emphasis on a11y), React + TypeScript, and Redux Toolkit + Tailwind CSS.
