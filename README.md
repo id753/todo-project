@@ -2,6 +2,11 @@
 ## A project showcasing three distinct implementations of a Todo List application with advanced features (editing, sorting, and theme/language switching).
  ![App Screenshot](https://github.com/user-attachments/assets/971fb3ae-ca27-41f3-836d-a9b278485dec)
  <img src="https://github.com/user-attachments/assets/971fb3ae-ca27-41f3-836d-a9b278485dec" width="500"> 
+ 
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/971fb3ae-ca27-41f3-836d-a9b278485dec" alt="Todo App Screenshot" width="700"/>
+</p>
+
 
 ## [Live Project](https://github.com/id753/todo-project-api)
 ## [Backend Code](https://github.com/id753/todo-project-api)
