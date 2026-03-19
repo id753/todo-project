@@ -6,7 +6,7 @@
 
 
 ## [Live Project](id753.github.io/todo-project/)
-### [Vanilla JS & Accessibility (a11y)](https://id753.github.io/todo-project/js)
+#### [Vanilla JS & Accessibility (a11y)](https://id753.github.io/todo-project/js)
 ### [React & TypeScript](https://todo-project-zeta-ten.vercel.app)
 ### [Redux Toolkit & Tailwind CSS](https://todo-project-redux.vercel.app)
 ## [Backend Code](https://github.com/id753/todo-project-api)
@@ -39,7 +39,7 @@ Create a .env file in the root directory (use .env.example as a template):
 Run the app
 
     npm run dev
-Open http://localhost:5173 in your browser.
+Open http://localhost:3000 in your browser.
 
 
 ## Additional information
