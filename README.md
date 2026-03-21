@@ -5,7 +5,7 @@
 </p>
 
 
-## [Live Project](https://id753.github.io/todo-project/)
+## [Live Project](https://id753.github.io/todo-project/) ⚠️ Note: The server is on a free plan, so it may take 30-50s to wake up 🚀 on the first load.
 #### [Vanilla JS & Accessibility (a11y)](https://id753.github.io/todo-project/js)
 #### [React & TypeScript](https://todo-project-zeta-ten.vercel.app)
 #### [Redux Toolkit & Tailwind CSS](https://todo-project-redux.vercel.app)
@@ -41,4 +41,4 @@ Run the app
     npm run dev
 Open http://localhost:3000 in your browser.
 
-## ⚠️ Note: The server is on a free plan, so it may take 30-50s to wake up 🚀 on the first load.
+## ⚠️ Note: The server is hosted on Render's free plan and may “sleep” when idle — the first load after waking up can take 30–50 seconds.
