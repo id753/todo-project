@@ -5,7 +5,8 @@
 </p>
 
 
-## [Live Project](https://id753.github.io/todo-project/) ⚠️ Note: The server is on a free plan, so it may take 30-50s to wake up 🚀 on the first load.
+## [Live Project](https://id753.github.io/todo-project/) 
+⚠️ Note: The server is on a free plan, so it may take 30-50s to wake up 🚀 on the first load.
 #### [Vanilla JS & Accessibility (a11y)](https://id753.github.io/todo-project/js)
 #### [React & TypeScript](https://todo-project-zeta-ten.vercel.app)
 #### [Redux Toolkit & Tailwind CSS](https://todo-project-redux.vercel.app)
