@@ -28,7 +28,7 @@
 ## Getting Started (Frontend)
 Clone the repository
       
-    git clone <your-repository-link>
+    git clone git@github.com:id753/todo-project.git
 Install dependencies
 
      npm install
