@@ -41,6 +41,4 @@ Run the app
     npm run dev
 Open http://localhost:3000 in your browser.
 
-
-## Additional information
-🚀 The server is on a free plan, so it may take 30-50s to wake up on the first load.
+## ⚠️ Note: 🚀 The server is on a free plan, so it may take 30-50s to wake up on the first load.
