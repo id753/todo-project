@@ -1,6 +1,6 @@
 # Todo App | Multiple Implementations
 ## A project showcasing three distinct implementations of a Todo List application with advanced features (editing, sorting, and theme/language switching).
-<p align="center">  <img src="https://github.com/user-attachments/assets/971fb3ae-ca27-41f3-836d-a9b278485dec" alt="Todo App Screenshot" width="450"/></p> 
+<p align="center">  <img src="https://github.com/user-attachments/assets/971fb3ae-ca27-41f3-836d-a9b278485dec" alt="Todo App Screenshot" width="450"/>Todo App Screenshot</p> 
 
 
 ## [Live Project](https://id753.github.io/todo-project/) 
